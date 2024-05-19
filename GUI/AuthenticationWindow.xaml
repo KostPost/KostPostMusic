@@ -1,0 +1,60 @@
+﻿<Window x:Class="KostPostMusic.AuthenticationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Authentication" Height="300" Width="400">
+    <Grid>
+        <!-- Shared Message TextBlock -->
+        <TextBlock x:Name="MessageTextBlock" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="30,10,0,0"
+                   Width="300" Foreground="Red" />
+
+        <!-- Login Section -->
+        <StackPanel x:Name="LoginPanel" VerticalAlignment="Top" Margin="30,50,0,0">
+            <TextBlock Text="Login Page" FontWeight="Bold" FontSize="16" Margin="0,0,0,10" />
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Label Content="Username:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" />
+                <TextBox x:Name="LoginUsernameTextBox" Grid.Row="0" Grid.Column="1" Width="200" />
+                <Label Content="Password:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" />
+                <PasswordBox x:Name="LoginPasswordBox" Grid.Row="1" Grid.Column="1" Width="200" />
+                <Button Content="Login" Grid.Row="2" Grid.ColumnSpan="2" Width="80" Margin="0,10,0,0"
+                        HorizontalAlignment="Left" Click="LoginButton_Click" />
+                <Button Content="Switch to Register" Grid.Row="3" Grid.ColumnSpan="2" Width="120" Margin="0,5,0,0"
+                        HorizontalAlignment="Left" Click="SwitchToRegister_Click" />
+            </Grid>
+        </StackPanel>
+
+        <!-- Registration Section -->
+        <StackPanel x:Name="RegisterPanel" VerticalAlignment="Top" Margin="30,50,0,0" Visibility="Collapsed">
+            <TextBlock Text="Registration Page" FontWeight="Bold" FontSize="16" Margin="0,0,0,10" />
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Label Content="Username:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" />
+                <TextBox x:Name="RegisterUsernameTextBox" Grid.Row="0" Grid.Column="1" Width="200" />
+                <Label Content="Password:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" />
+                <PasswordBox x:Name="RegisterPasswordBox" Grid.Row="1" Grid.Column="1" Width="200" />
+                <Button Content="Register" Grid.Row="2" Grid.ColumnSpan="2" Width="80" Margin="0,10,0,0"
+                        HorizontalAlignment="Left" Click="RegisterButton_Click" />
+                <Button Content="Switch to Login" Grid.Row="3" Grid.ColumnSpan="2" Width="120" Margin="0,5,0,0"
+                        HorizontalAlignment="Left" Click="SwitchToLogin_Click" />
+            </Grid>
+        </StackPanel>
+    </Grid>
+</Window>

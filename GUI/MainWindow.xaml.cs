@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ClassesData;
 
 namespace KostPostMusic;
 
@@ -16,37 +17,31 @@ public partial class MainWindow : Window
 {
     public MainWindow() 
     {
-        if (!Application.Current.Windows.OfType<MainWindow>().Any())
-        {
-            Console.WriteLine("MainPage trigger");
-            InitializeComponent();
-            if (UsernameLabel == null)
-            {
-                throw new Exception("UsernameLabel is null!");
-            }
-        }
+        InitializeComponent();
+        VerifyUserAuthorization();
     }
 
-    public MainWindow(string username)  // This is your existing constructor
+    public MainWindow(UserAccount userAccount)  
     {
         InitializeComponent();
-    
-        Console.WriteLine("username MainPage trigger \t" + username);
-
-        UsernameLabel.Content = username;
-    }
-    
-    private void ShowLoginPage()
-    {
-        AuthenticationWindow loginWindow = new AuthenticationWindow();
-        loginWindow.RegisterButtonClick += ShowRegistrationPage;
-        ContentArea.Content = loginWindow;
+        UsernameLabel.Content = userAccount.Username;
     }
 
-    private void ShowRegistrationPage(object sender, RoutedEventArgs e)
+    private void VerifyUserAuthorization()
     {
-        RegistrationWindow registrationWindow = new RegistrationWindow();
-        registrationWindow.BackButtonClick += ShowLoginPage;
-        ContentArea.Content = registrationWindow;
+        if (!Application.Current.Windows.OfType<AuthenticationWindow>().Any())
+        {
+            AuthenticationWindow authenticationWindow = new AuthenticationWindow();
+            if (authenticationWindow.ShowDialog() == true)
+            {
+                string username = authenticationWindow.UserAccount.Username;
+                Console.WriteLine("Authorized user: " + username);
+                UsernameLabel.Content = username;
+            }
+            else
+            {
+                Application.Current.Shutdown();
+            }
+        }
     }
 }

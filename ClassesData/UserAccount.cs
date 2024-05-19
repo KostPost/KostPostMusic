@@ -1,7 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DataBaseActions;
+
+namespace ClassesData;
 
 
 [Table("user_account")]
@@ -16,4 +17,21 @@ public class UserAccount
     
     [Column("password")]
     public String Password { get; set; }
+
+    public UserAccount()
+    {
+        
+    }
+    public UserAccount(string username, string password)
+    {
+        if (username == null)
+            throw new ArgumentNullException(nameof(username), "Username cannot be null");
+
+        if (password == null)
+            throw new ArgumentNullException(nameof(password), "Password cannot be null");
+
+        Username = username;
+        Password = password;
+    }
+    
 }
