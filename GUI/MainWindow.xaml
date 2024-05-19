@@ -7,17 +7,37 @@
         mc:Ignorable="d"
         Title="Main Window" Height="600" Width="1000">
     <Window.Resources>
-        <Style TargetType="Page">
-            <Setter Property="Background" Value="White" />
+        <!-- Style for the username button -->
+        <Style TargetType="Button" x:Key="UsernameButtonStyle">
+            <Setter Property="Content" Value="{Binding CurrentUser.Username}" />
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="HorizontalAlignment" Value="Left" /> <!-- Align to the left -->
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Margin" Value="20,10,0,10" /> <!-- Adjust margin -->
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border BorderThickness="1" BorderBrush="Transparent">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{TemplateBinding Content}" VerticalAlignment="Center" Margin="5"/>
+                                <Path Grid.Column="1" VerticalAlignment="Center" Data="M0,0 L4,4 L8,0 Z" Fill="Black" Margin="5"/>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
     </Window.Resources>
     <Grid>
-        <ContentControl x:Name="ContentArea" />
-
-        
-        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" />
-        <!-- This Label has been moved inside the Grid. -->
-        <Label x:Name="UsernameLabel" Content="Default" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <!-- Other controls can go here. -->
+        <!-- Main content area -->
+        <Grid Background="#F0F0F0">
+            <!-- Username button -->
+            <Button x:Name="UsernameButton" Style="{StaticResource UsernameButtonStyle}" Click="UsernameButton_Click" />
+        </Grid>
     </Grid>
 </Window>

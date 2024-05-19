@@ -28,12 +28,13 @@ public partial class AuthenticationWindow : Window
     {
         string username = LoginUsernameTextBox.Text;
         string password = LoginPasswordBox.Password;
-    
+
         AuthenticationResult authResult = await AuthenticateUser(username, password);
 
         switch (authResult)
         {
             case AuthenticationResult.Success:
+                App.SaveCredentials(username, password); 
                 OpenMainWindow(UserAccount);
                 MessageTextBlock.Text = "Authorization successful!";
                 break;
@@ -48,6 +49,7 @@ public partial class AuthenticationWindow : Window
                 break;
         }
     }
+
 
 
     private async void RegisterButton_Click(object sender, RoutedEventArgs e)

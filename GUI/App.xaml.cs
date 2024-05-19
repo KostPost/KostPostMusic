@@ -1,10 +1,13 @@
 ﻿using System.Configuration;
 using System.Data;
 using System.Windows;
+using ClassesData;
 
 namespace KostPostMusic;
 
 using System.Windows;
+
+using Microsoft.Win32;
 
 public partial class App : Application
 {
@@ -12,7 +15,62 @@ public partial class App : Application
     {
         base.OnStartup(e);
 
-        AuthenticationWindow loginWindow = new AuthenticationWindow();
-        loginWindow.Show();
+        if (IsUserLoggedIn())
+        {
+            OpenMainWindow();
+        }
+        else
+        {
+            AuthenticationWindow loginWindow = new AuthenticationWindow();
+            loginWindow.Show();
+        }
     }
+
+    private bool IsUserLoggedIn()
+    {
+        RegistryKey key = Registry.CurrentUser.OpenSubKey("SOFTWARE\\KostPostMusic");
+        if (key != null)
+        {
+            string username = (string)key.GetValue("Username");
+            string password = (string)key.GetValue("Password");
+            key.Close();
+            
+            return !string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password);
+        }
+        return false;
+    }
+
+    public static void SaveCredentials(string username, string password)
+    {
+        RegistryKey key = Registry.CurrentUser.CreateSubKey("SOFTWARE\\KostPostMusic");
+        key.SetValue("Username", username, RegistryValueKind.String);
+        key.SetValue("Password", password, RegistryValueKind.String);
+        key.Close();
+    }
+
+    public static void ClearCredentials()
+    {
+        RegistryKey key = Registry.CurrentUser.OpenSubKey("SOFTWARE\\KostPostMusic", true);
+        if (key != null)
+        {
+            key.DeleteValue("Username");
+            key.DeleteValue("Password");
+            key.Close();
+        }
+    }
+
+    
+    private void OpenMainWindow()
+    {
+        RegistryKey key = Registry.CurrentUser.OpenSubKey("SOFTWARE\\KostPostMusic");
+        if (key != null)
+        {
+            string username = (string)key.GetValue("Username");
+            key.Close();
+        
+            MainWindow mainWindow = new MainWindow(new UserAccount(username, " "));
+            mainWindow.Show();
+        }
+    }
+
 }
