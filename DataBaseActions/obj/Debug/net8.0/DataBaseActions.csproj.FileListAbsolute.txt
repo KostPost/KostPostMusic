@@ -1,0 +1,17 @@
+P:\KostPostMusic\DataBaseActions\bin\Debug\net8.0\DataBaseActions.deps.json
+P:\KostPostMusic\DataBaseActions\bin\Debug\net8.0\DataBaseActions.dll
+P:\KostPostMusic\DataBaseActions\bin\Debug\net8.0\DataBaseActions.pdb
+P:\KostPostMusic\DataBaseActions\bin\Debug\net8.0\ClassesData.dll
+P:\KostPostMusic\DataBaseActions\bin\Debug\net8.0\ClassesData.pdb
+P:\KostPostMusic\DataBaseActions\obj\Debug\net8.0\DataBaseActions.csproj.AssemblyReference.cache
+P:\KostPostMusic\DataBaseActions\obj\Debug\net8.0\DataBaseActions.GeneratedMSBuildEditorConfig.editorconfig
+P:\KostPostMusic\DataBaseActions\obj\Debug\net8.0\DataBaseActions.AssemblyInfoInputs.cache
+P:\KostPostMusic\DataBaseActions\obj\Debug\net8.0\DataBaseActions.AssemblyInfo.cs
+P:\KostPostMusic\DataBaseActions\obj\Debug\net8.0\DataBaseActions.csproj.CoreCompileInputs.cache
+P:\KostPostMusic\DataBaseActions\obj\Debug\net8.0\DataBase.CBCE3E82.Up2Date
+P:\KostPostMusic\DataBaseActions\obj\Debug\net8.0\DataBaseActions.dll
+P:\KostPostMusic\DataBaseActions\obj\Debug\net8.0\refint\DataBaseActions.dll
+P:\KostPostMusic\DataBaseActions\obj\Debug\net8.0\DataBaseActions.pdb
+P:\KostPostMusic\DataBaseActions\obj\Debug\net8.0\ref\DataBaseActions.dll
+P:\KostPostMusic\DataBaseActions\bin\Debug\net8.0\DataBaseActions.runtimeconfig.json
+P:\KostPostMusic\DataBaseActions\obj\Debug\net8.0\DataBaseActions.genruntimeconfig.cache

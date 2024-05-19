@@ -1,0 +1,11 @@
+P:\KostPostMusic\ClassesData\bin\Debug\net8.0\ClassesData.deps.json
+P:\KostPostMusic\ClassesData\bin\Debug\net8.0\ClassesData.dll
+P:\KostPostMusic\ClassesData\bin\Debug\net8.0\ClassesData.pdb
+P:\KostPostMusic\ClassesData\obj\Debug\net8.0\ClassesData.GeneratedMSBuildEditorConfig.editorconfig
+P:\KostPostMusic\ClassesData\obj\Debug\net8.0\ClassesData.AssemblyInfoInputs.cache
+P:\KostPostMusic\ClassesData\obj\Debug\net8.0\ClassesData.AssemblyInfo.cs
+P:\KostPostMusic\ClassesData\obj\Debug\net8.0\ClassesData.csproj.CoreCompileInputs.cache
+P:\KostPostMusic\ClassesData\obj\Debug\net8.0\ClassesData.dll
+P:\KostPostMusic\ClassesData\obj\Debug\net8.0\refint\ClassesData.dll
+P:\KostPostMusic\ClassesData\obj\Debug\net8.0\ClassesData.pdb
+P:\KostPostMusic\ClassesData\obj\Debug\net8.0\ref\ClassesData.dll
