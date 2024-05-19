@@ -12,30 +12,45 @@
             <Setter Property="Content" Value="{Binding CurrentUser.Username}" />
             <Setter Property="Foreground" Value="Black" />
             <Setter Property="FontSize" Value="16" />
-            <Setter Property="HorizontalAlignment" Value="Left" /> <!-- Align to the left -->
-            <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="Margin" Value="20,10,0,10" /> <!-- Adjust margin -->
+            <Setter Property="HorizontalAlignment" Value="Right" /> <!-- Align to the right -->
+            <Setter Property="VerticalAlignment" Value="Top" /> <!-- Align to the top -->
+            <Setter Property="Margin" Value="0,10,20,10" /> <!-- Adjust margin -->
+            <Setter Property="Width" Value="200"/> <!-- Adjust width -->
+            <Setter Property="Height" Value="50"/> <!-- Adjust height -->
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border BorderThickness="1" BorderBrush="Transparent">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Text="{TemplateBinding Content}" VerticalAlignment="Center" Margin="5"/>
-                                <Path Grid.Column="1" VerticalAlignment="Center" Data="M0,0 L4,4 L8,0 Z" Fill="Black" Margin="5"/>
-                            </Grid>
+                        <Border BorderThickness="1" BorderBrush="Transparent" Background="White">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
+        
+        <!-- Style for the buttons -->
+        <Style TargetType="Button" x:Key="ButtonStyle">
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#EEEEEE"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
     <Grid>
         <!-- Main content area -->
-        <Grid Background="#F0F0F0">
+        <Grid Background="Black">
+            <!-- Home button -->
+            <Button Style="{StaticResource ButtonStyle}" Content="Home" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10"/>
+            <!-- Search button -->
+            <Button Style="{StaticResource ButtonStyle}" Content="Search" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,70,0,0"/>
+            
             <!-- Username button -->
             <Button x:Name="UsernameButton" Style="{StaticResource UsernameButtonStyle}" Click="UsernameButton_Click" />
         </Grid>

@@ -1,5 +1,7 @@
 ﻿using System.Configuration;
 using System.Data;
+using System.Diagnostics;
+using System.Reflection;
 using System.Windows;
 using ClassesData;
 
@@ -58,7 +60,24 @@ public partial class App : Application
             key.Close();
         }
     }
+    public static void RestartApplication()
+    {
+        // Get the location of the current executable
+        string assemblyLocation = Assembly.GetEntryAssembly().Location;
 
+        // Get the path to the executable file
+        string executablePath = assemblyLocation.Replace(".dll", ".exe");
+
+        // Start a new instance of the application
+        Process.Start(new ProcessStartInfo
+        {
+            FileName = executablePath,
+            UseShellExecute = true
+        });
+
+        // Exit the current instance of the application
+        Application.Current.Shutdown();
+    }
     
     private void OpenMainWindow()
     {

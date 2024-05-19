@@ -16,6 +16,8 @@ namespace KostPostMusic;
 public partial class MainWindow : Window
 {
     private UserAccount UserAccount;
+    private bool isMenuOpen = false;
+
     public MainWindow() 
     {
         InitializeComponent();
@@ -25,38 +27,87 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
         UserAccount = userAccount;
-        // UsernameLabel.Content = UserAccount.Username;
-        Console.WriteLine(userAccount.Username);
+        UpdateButtonContent();
+    }
+
+    private void UpdateButtonContent()
+    {
+        UsernameButton.Content = $"{UserAccount.Username} \u25BC"; // Unicode for down arrow
     }
     
+
     private void UsernameButton_Click(object sender, RoutedEventArgs e)
     {
-        ContextMenu menu = new ContextMenu();
-        menu.Items.Add(new MenuItem() { Header = "Action 1" });
-        menu.Items.Add(new MenuItem() { Header = "Action 2" });
-        menu.Items.Add(new MenuItem() { Header = "Action 3" });
-        menu.Items.Add(new MenuItem() { Header = "Action 4" });
-        menu.Items.Add(new MenuItem() { Header = "Action 5" });
+        if (!isMenuOpen)
+        {
+            ContextMenu menu = new ContextMenu();
 
-        // Set the content of the button to display the username and an arrow icon
-        UsernameButton.Content = $"{UserAccount.Username} \u25BC"; // Unicode for down arrow
+            // Add actions for the menu items
+            MenuItem profileItem = new MenuItem() { Header = "Profile" };
+            profileItem.Click += Profile_Click;
+            menu.Items.Add(profileItem);
 
-        // When the menu closes, reset the button content to just the username
-        menu.Closed += (sender, args) => UsernameButton.Content = UserAccount.Username;
+            MenuItem settingsItem = new MenuItem() { Header = "Settings" };
+            settingsItem.Click += Settings_Click;
+            menu.Items.Add(settingsItem);
 
-        menu.PlacementTarget = UsernameButton;
-        menu.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
-        menu.IsOpen = true;
+            MenuItem logoutItem = new MenuItem() { Header = "Log out" };
+            logoutItem.Click += Logout_Click;
+            menu.Items.Add(logoutItem);
+
+            menu.Closed += (sender, args) => isMenuOpen = false;
+
+            menu.PlacementTarget = UsernameButton;
+            menu.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
+            menu.IsOpen = true;
+
+            isMenuOpen = true;
+        }
+        else
+        {
+            ContextMenu menu = UsernameButton.ContextMenu;
+            if (menu != null)
+            {
+                menu.IsOpen = false;
+                isMenuOpen = false;
+            }
+        }
     }
 
+    private void Profile_Click(object sender, RoutedEventArgs e)
+    {
+        // Add logic for the "Profile" action here
+    }
 
-    
+    private void Settings_Click(object sender, RoutedEventArgs e)
+    {
+        // Add logic for the "Settings" action here
+    }
+
     private void Logout_Click(object sender, RoutedEventArgs e)
     {
         App.ClearCredentials();
-        Close();
+
+        App.RestartApplication();
+    }
+
+
+
+
+
+
+    private void Window_Loaded(object sender, RoutedEventArgs e)
+    {
+        UpdateButtonContent();
+    }
+
+    private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+    {
+        if (!isMenuOpen)
+            UpdateButtonContent();
     }
 }
+
 
 
 
