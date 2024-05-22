@@ -1,40 +1,110 @@
-﻿using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
+using System.Windows.Controls.Primitives;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Windows.Threading;
 using ClassesData;
+
 
 namespace KostPostMusic;
 
-// MainWindow.xaml.cs
 public partial class MainWindow : Window
 {
     private UserAccount UserAccount;
     private bool isMenuOpen = false;
+    private MediaPlayer mediaPlayer = new MediaPlayer();
+    private DispatcherTimer timer;
+    private bool isPlaying = false;
 
-    public MainWindow() 
+    public MainWindow()
     {
         InitializeComponent();
     }
 
-    public MainWindow(UserAccount userAccount)  
+    public MainWindow(UserAccount userAccount)
     {
         InitializeComponent();
         UserAccount = userAccount;
         UpdateButtonContent();
+
+        mediaPlayer.Open(new Uri(@"P:\KostPostMusic\Music\kish.mp3", UriKind.RelativeOrAbsolute));
+        mediaPlayer.MediaOpened += MediaPlayer_MediaOpened;
+
+        timer = new DispatcherTimer();
+        timer.Interval = TimeSpan.FromMilliseconds(100); // Update the slider every 100 milliseconds
+        timer.Tick += Timer_Tick;
+    }
+
+    private void Timer_Tick(object sender, EventArgs e)
+    {
+        if (!isDraggingSlider)
+        {
+            MusicSlider.Value = mediaPlayer.Position.TotalMilliseconds;
+        }
+        CurrentTimeTextBlock.Text = mediaPlayer.Position.ToString(@"mm\:ss");
+    }
+
+    private void MediaPlayer_MediaOpened(object sender, EventArgs e)
+    {
+        MusicSlider.Maximum = mediaPlayer.NaturalDuration.TimeSpan.TotalMilliseconds;
+        timer.Start();
+        AttachSliderThumbEvents();
+        TotalTimeTextBlock.Text = mediaPlayer.NaturalDuration.TimeSpan.ToString(@"mm\:ss");
+    }
+
+    private void AttachSliderThumbEvents()
+    {
+        var track = MusicSlider.Template.FindName("PART_Track", MusicSlider) as Track;
+        if (track != null)
+        {
+            var thumb = track.Thumb;
+            if (thumb != null)
+            {
+                thumb.DragStarted += MusicSlider_DragStarted;
+                thumb.DragCompleted += MusicSlider_DragCompleted;
+            }
+        }
+    }
+    private void PlayPauseButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (isPlaying)
+        {
+            mediaPlayer.Pause();
+            PlayPauseButton.Content = "Play";
+        }
+        else
+        {
+            mediaPlayer.Play();
+            PlayPauseButton.Content = "Pause";
+        }
+        isPlaying = !isPlaying;
+    }
+
+    private bool isDraggingSlider = false;
+
+    private void MusicSlider_DragStarted(object sender, DragStartedEventArgs e)
+    {
+        isDraggingSlider = true;
+    }
+
+    private void MusicSlider_DragCompleted(object sender, DragCompletedEventArgs e)
+    {
+        isDraggingSlider = false;
+        mediaPlayer.Position = TimeSpan.FromMilliseconds(MusicSlider.Value);
+    }
+
+    private void MusicSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+    {
+        if (!isDraggingSlider)
+        {
+            mediaPlayer.Position = TimeSpan.FromMilliseconds(e.NewValue);
+        }
     }
 
     private void UpdateButtonContent()
     {
         UsernameButton.Content = $"{UserAccount.Username} \u25BC"; // Unicode for down arrow
     }
-    
 
     private void UsernameButton_Click(object sender, RoutedEventArgs e)
     {
@@ -91,11 +161,6 @@ public partial class MainWindow : Window
         App.RestartApplication();
     }
 
-
-
-
-
-
     private void Window_Loaded(object sender, RoutedEventArgs e)
     {
         UpdateButtonContent();
@@ -107,26 +172,3 @@ public partial class MainWindow : Window
             UpdateButtonContent();
     }
 }
-
-
-
-
-
-
-// private void VerifyUserAuthorization()
-// {
-//     if (!Application.Current.Windows.OfType<AuthenticationWindow>().Any())
-//     {
-//         AuthenticationWindow authenticationWindow = new AuthenticationWindow();
-//         if (authenticationWindow.ShowDialog() == true)
-//         {
-//             string username = authenticationWindow.UserAccount.Username;
-//             Console.WriteLine("Authorized user: " + username);
-//             UsernameLabel.Content = username;
-//         }
-//         else
-//         {
-//             Application.Current.Shutdown();
-//         }
-//     }
-// }

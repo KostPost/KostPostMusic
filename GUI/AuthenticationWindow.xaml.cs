@@ -121,14 +121,22 @@ public partial class AuthenticationWindow : Window
 
     private async Task<RegistrationResult> RegisterUser(string username, string password)
     {
-        var user = await _userService.GetUserByUsername(username);
+        var newUser = new UserAccount
+        {
+            Username = username,
+            Password = password, 
+            AccountType = AccountType.User
+        };
 
-        if (user != null)
+        bool isAdded = await _userService.AddUserAccount(newUser);
+        if (isAdded)
+        {
+            return RegistrationResult.Success;
+        }
+        else
         {
             return RegistrationResult.UserAlreadyExists;
         }
-
-        return RegistrationResult.Success;
     }
 
 

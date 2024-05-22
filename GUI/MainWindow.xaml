@@ -5,18 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KostPostMusic"
         mc:Ignorable="d"
-        Title="Main Window" Height="600" Width="1000">
+        Title="Main Window" Height="600" Width="1000"
+        Loaded="Window_Loaded"
+        SizeChanged="Window_SizeChanged">
     <Window.Resources>
         <!-- Style for the username button -->
         <Style TargetType="Button" x:Key="UsernameButtonStyle">
             <Setter Property="Content" Value="{Binding CurrentUser.Username}" />
             <Setter Property="Foreground" Value="Black" />
             <Setter Property="FontSize" Value="16" />
-            <Setter Property="HorizontalAlignment" Value="Right" /> <!-- Align to the right -->
-            <Setter Property="VerticalAlignment" Value="Top" /> <!-- Align to the top -->
-            <Setter Property="Margin" Value="0,10,20,10" /> <!-- Adjust margin -->
-            <Setter Property="Width" Value="200"/> <!-- Adjust width -->
-            <Setter Property="Height" Value="50"/> <!-- Adjust height -->
+            <Setter Property="HorizontalAlignment" Value="Right" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="Margin" Value="0,10,20,10" />
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="Height" Value="50"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
@@ -27,7 +29,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        
+
         <!-- Style for the buttons -->
         <Style TargetType="Button" x:Key="ButtonStyle">
             <Setter Property="Foreground" Value="Black"/>
@@ -50,9 +52,19 @@
             <Button Style="{StaticResource ButtonStyle}" Content="Home" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10"/>
             <!-- Search button -->
             <Button Style="{StaticResource ButtonStyle}" Content="Search" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,70,0,0"/>
-            
+
             <!-- Username button -->
             <Button x:Name="UsernameButton" Style="{StaticResource UsernameButtonStyle}" Click="UsernameButton_Click" />
+
+            <!-- Music player controls -->
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,20">
+                <Button x:Name="PlayPauseButton" Content="Play" Click="PlayPauseButton_Click" Margin="10" Padding="10,5" Width="100" />
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,20">
+                    <TextBlock x:Name="CurrentTimeTextBlock" Foreground="White" VerticalAlignment="Center" Margin="10,0"/>
+                    <Slider x:Name="MusicSlider" Width="300" ValueChanged="MusicSlider_ValueChanged" />
+                    <TextBlock x:Name="TotalTimeTextBlock" Foreground="White" VerticalAlignment="Center" Margin="10,0"/>
+                </StackPanel>
+            </StackPanel>
         </Grid>
     </Grid>
 </Window>
