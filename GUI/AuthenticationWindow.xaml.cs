@@ -17,10 +17,10 @@ public partial class AuthenticationWindow : Window
         InitializeComponent();
         SwitchToLoginView();
 
-        var options = new DbContextOptionsBuilder<UserAccountDbContext>()
+        var options = new DbContextOptionsBuilder<KostPostMusicContext>()
             .UseNpgsql("Host=localhost;Database=KostPostMusic;Username=postgres;Password=2025")
             .Options;
-        var dbContext = new UserAccountDbContext(options);
+        var dbContext = new KostPostMusicContext(options);
         _userService = new UserService(dbContext);
     }
 
@@ -102,13 +102,13 @@ public partial class AuthenticationWindow : Window
     private async Task<AuthenticationResult> AuthenticateUser(string username, string password)
     {
         var user = await _userService.GetUserByUsername(username);
-
+        
         if (user == null)
         {
             return AuthenticationResult.UserNotFound;
         }
 
-        if (user.Password != password)
+        if (user.Password != password )
         {
             return AuthenticationResult.IncorrectPassword;
         }
@@ -118,31 +118,35 @@ public partial class AuthenticationWindow : Window
         return AuthenticationResult.Success;
     }
 
-
     private async Task<RegistrationResult> RegisterUser(string username, string password)
     {
-        var newUser = new UserAccount
+        try
         {
-            Username = username,
-            Password = password, 
-            AccountType = AccountType.User
-        };
+            var newUser = new UserAccount(username, password);
 
-        bool isAdded = await _userService.AddUserAccount(newUser);
-        if (isAdded)
-        {
-            return RegistrationResult.Success;
+            bool isAdded = await _userService.AddUserAccount(newUser);
+            if (isAdded)
+            {
+                return RegistrationResult.Success;
+            }
+            else
+            {
+                return RegistrationResult.UserAlreadyExists;
+            }
         }
-        else
+        catch (Exception ex)
         {
-            return RegistrationResult.UserAlreadyExists;
+            // Log the exception for debugging purposes
+            Console.WriteLine($"Error during user registration: {ex.Message}");
+            return RegistrationResult.Error;
         }
     }
 
 
+
     private void OpenMainWindow(UserAccount user)
     {
-        MainWindow mainWindow = new MainWindow(user);
+        MusicKostPost mainWindow = new MusicKostPost(user);
         mainWindow.Show();
         Close();
     }

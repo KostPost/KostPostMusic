@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "XEInyUL1t2qTnhBV54kjWkFsJaVnGmZcMkj5wAvrOt5MbWVI91QFp40uUl+MDgPFF/n1ooUrJ6yJ9JjorcZ4/Q==",
+  "dgSpecHash": "+h0PbJSK6Li2xQoIk0qfJse+aHX2azOHeCq9+QCoHAoldQicBKs3nPNMPsesZTOvl6cHZRryd7kBZv7jTdOw7g==",
   "success": true,
   "projectFilePath": "P:\\KostPostMusic\\DataBaseActions\\DataBaseActions.csproj",
   "expectedPackageFiles": [
@@ -16,6 +16,7 @@
     "C:\\Users\\KostPost\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\8.0.5\\microsoft.entityframeworkcore.analyzers.8.0.5.nupkg.sha512",
     "C:\\Users\\KostPost\\.nuget\\packages\\microsoft.entityframeworkcore.design\\8.0.5\\microsoft.entityframeworkcore.design.8.0.5.nupkg.sha512",
     "C:\\Users\\KostPost\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\8.0.5\\microsoft.entityframeworkcore.relational.8.0.5.nupkg.sha512",
+    "C:\\Users\\KostPost\\.nuget\\packages\\microsoft.entityframeworkcore.tools\\8.0.5\\microsoft.entityframeworkcore.tools.8.0.5.nupkg.sha512",
     "C:\\Users\\KostPost\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\8.0.0\\microsoft.extensions.caching.abstractions.8.0.0.nupkg.sha512",
     "C:\\Users\\KostPost\\.nuget\\packages\\microsoft.extensions.caching.memory\\8.0.0\\microsoft.extensions.caching.memory.8.0.0.nupkg.sha512",
     "C:\\Users\\KostPost\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\8.0.0\\microsoft.extensions.configuration.abstractions.8.0.0.nupkg.sha512",

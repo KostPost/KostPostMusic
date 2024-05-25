@@ -5,32 +5,38 @@ namespace DataBaseActions;
 
 public class UserService
 {
-    private readonly UserAccountDbContext _context;
+    private readonly KostPostMusicContext _dbContext;
 
-    public UserService(UserAccountDbContext context)
+    public UserService(KostPostMusicContext dbContext)
     {
-        _context = context;
+        _dbContext = dbContext;
     }
 
-    public async Task<UserAccount?> GetUserByUsername(string username)
+    // public async Task<UserAccount?> GetUserByUsername(string username)
+    // {
+    //     return await _dbContext.Accounts.OfType<UserAccount>().FirstOrDefaultAsync(u => u.Username == username);
+    // }
+    
+    public async Task<UserAccount?>? GetUserByUsername(string username)
     {
-        return await _context.UserAccounts.FirstOrDefaultAsync(u => u.Username == username);
+        return _dbContext.UserAccounts.FirstOrDefault(u => u.Username == username);
     }
 
     public async Task<bool> AddUserAccount(UserAccount userAccount)
     {
-        var existingUser = await _context.UserAccounts.FirstOrDefaultAsync(u => u.Username == userAccount.Username);
+        var existingUser = await _dbContext.Accounts.FirstOrDefaultAsync(u => u.Username == userAccount.Username);
 
         if (existingUser != null)
         {
             return false;
         }
 
-        await _context.UserAccounts.AddAsync(userAccount);
-        await _context.SaveChangesAsync();
+        await _dbContext.Accounts.AddAsync(userAccount);
+        await _dbContext.SaveChangesAsync();
         return true;
     }
 }
+
 
 public enum AuthenticationResult
 {

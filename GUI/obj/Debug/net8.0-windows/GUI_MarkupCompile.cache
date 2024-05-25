@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
 P:\KostPostMusic\GUI\App.xaml
-21912741119
+21919112805
 
-5-248971614
+5-1259869199
 2141371667042
-AuthenticationWindow.xaml;MainWindow.xaml;
+AuthenticationWindow.xaml;MusicKostPost.xaml;
 
 False
 

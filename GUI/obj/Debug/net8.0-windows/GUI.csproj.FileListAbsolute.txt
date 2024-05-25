@@ -22,11 +22,9 @@ P:\KostPostMusic\GUI\bin\Debug\net8.0-windows\DataBaseActions.dll
 P:\KostPostMusic\GUI\bin\Debug\net8.0-windows\DataBaseActions.pdb
 P:\KostPostMusic\GUI\bin\Debug\net8.0-windows\ClassesData.pdb
 P:\KostPostMusic\GUI\obj\Debug\net8.0-windows\GUI.csproj.AssemblyReference.cache
-P:\KostPostMusic\GUI\obj\Debug\net8.0-windows\MainWindow.g.cs
 P:\KostPostMusic\GUI\obj\Debug\net8.0-windows\App.g.cs
 P:\KostPostMusic\GUI\obj\Debug\net8.0-windows\GUI_MarkupCompile.cache
 P:\KostPostMusic\GUI\obj\Debug\net8.0-windows\GUI_MarkupCompile.lref
-P:\KostPostMusic\GUI\obj\Debug\net8.0-windows\MainWindow.baml
 P:\KostPostMusic\GUI\obj\Debug\net8.0-windows\GUI.g.resources
 P:\KostPostMusic\GUI\obj\Debug\net8.0-windows\GUI.GeneratedMSBuildEditorConfig.editorconfig
 P:\KostPostMusic\GUI\obj\Debug\net8.0-windows\GUI.AssemblyInfoInputs.cache
@@ -111,3 +109,5 @@ P:\KostPostMusic\GUI\bin\Debug\net8.0-windows\tr\Microsoft.CodeAnalysis.Workspac
 P:\KostPostMusic\GUI\bin\Debug\net8.0-windows\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 P:\KostPostMusic\GUI\bin\Debug\net8.0-windows\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
 P:\KostPostMusic\GUI\bin\Debug\net8.0-windows\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
+P:\KostPostMusic\GUI\obj\Debug\net8.0-windows\MusicKostPost.g.cs
+P:\KostPostMusic\GUI\obj\Debug\net8.0-windows\MusicKostPost.baml

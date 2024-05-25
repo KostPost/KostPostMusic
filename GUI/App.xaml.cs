@@ -16,6 +16,7 @@ public partial class App : Application
     protected override void OnStartup(StartupEventArgs e)
     {
         base.OnStartup(e);
+        
 
         if (IsUserLoggedIn())
         {
@@ -87,7 +88,7 @@ public partial class App : Application
             string username = (string)key.GetValue("Username");
             key.Close();
         
-            MainWindow mainWindow = new MainWindow(new UserAccount(username, " "));
+            MusicKostPost mainWindow = new MusicKostPost(new UserAccount(username, " "));
             mainWindow.Show();
         }
     }
