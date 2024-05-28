@@ -7,8 +7,7 @@ namespace KostPostMusic;
 
 public partial class AuthenticationWindow : Window
 {
-
-    public UserAccount UserAccount { get; set; }
+    public Account Account { get; set; }
 
     private readonly UserService _userService;
 
@@ -34,8 +33,8 @@ public partial class AuthenticationWindow : Window
         switch (authResult)
         {
             case AuthenticationResult.Success:
-                App.SaveCredentials(username, password); 
-                OpenMainWindow(UserAccount);
+                App.SaveCredentials(username, password);
+                OpenMainWindow(Account);
                 MessageTextBlock.Text = "Authorization successful!";
                 break;
             case AuthenticationResult.UserNotFound:
@@ -49,7 +48,6 @@ public partial class AuthenticationWindow : Window
                 break;
         }
     }
-
 
 
     private async void RegisterButton_Click(object sender, RoutedEventArgs e)
@@ -101,50 +99,79 @@ public partial class AuthenticationWindow : Window
 
     private async Task<AuthenticationResult> AuthenticateUser(string username, string password)
     {
-        var user = await _userService.GetUserByUsername(username);
-        
-        if (user == null)
+        try
         {
-            return AuthenticationResult.UserNotFound;
-        }
+            var user = await _userService.GetUserByUsername(username).ConfigureAwait(false);
 
-        if (user.Password != password )
+            if (user == null)
+            {
+                return AuthenticationResult.UserNotFound;
+            }
+
+            if (user.Password != password)
+            {
+                return AuthenticationResult.IncorrectPassword;
+            }
+
+            Account = user;
+
+            return AuthenticationResult.Success;
+        }
+        catch (Exception ex)
         {
-            return AuthenticationResult.IncorrectPassword;
+            Console.WriteLine($"Error authenticating user: {ex.Message}");
+            return AuthenticationResult.Error;
         }
-
-        UserAccount = user;
-
-        return AuthenticationResult.Success;
     }
 
-    private async Task<RegistrationResult> RegisterUser(string username, string password)
+
+    public async Task<RegistrationResult> RegisterUser(string username, string password)
     {
         try
         {
-            var newUser = new UserAccount(username, password);
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+            {
+                return RegistrationResult.InvalidInput;
+            }
 
-            bool isAdded = await _userService.AddUserAccount(newUser);
+            var existingUser = await _userService.GetUserByUsername(username).ConfigureAwait(false);
+            if (existingUser != null)
+            {
+                return RegistrationResult.UserAlreadyExists;
+            }
+
+            var newUser = new Account(username, password)
+            {
+                AccountType = AccountType.User.ToString(),
+                AdminLevel = null
+            };
+
+            bool isAdded = await _userService.AddUserAccount(newUser).ConfigureAwait(false);
             if (isAdded)
             {
                 return RegistrationResult.Success;
             }
             else
             {
-                return RegistrationResult.UserAlreadyExists;
+                return RegistrationResult.DatabaseError;
             }
+        }
+        catch (DbUpdateException ex)
+        {
+            // Log specific database exceptions
+            Console.WriteLine($"Database error during user registration: {ex.Message}");
+            return RegistrationResult.DatabaseError;
         }
         catch (Exception ex)
         {
-            // Log the exception for debugging purposes
+            // Log unexpected exceptions
             Console.WriteLine($"Error during user registration: {ex.Message}");
-            return RegistrationResult.Error;
+            return RegistrationResult.DatabaseError;
         }
     }
 
 
-
-    private void OpenMainWindow(UserAccount user)
+    private void OpenMainWindow(Account user)
     {
         MusicKostPost mainWindow = new MusicKostPost(user);
         mainWindow.Show();

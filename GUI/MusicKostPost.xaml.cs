@@ -4,13 +4,15 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using System.Windows.Threading;
 using ClassesData;
+using MusicAPI;
+using Track = System.Windows.Controls.Primitives.Track;
 
 
 namespace KostPostMusic;
 
 public partial class MusicKostPost : Window
 {
-    private UserAccount UserAccount;
+    private Account _account;
     private bool isMenuOpen = false;
     private MediaPlayer mediaPlayer = new MediaPlayer();
     private DispatcherTimer timer;
@@ -21,10 +23,17 @@ public partial class MusicKostPost : Window
         InitializeComponent();
     }
 
-    public MusicKostPost(UserAccount userAccount)
+    public MusicKostPost(Account account)
     {
+        //Console.WriteLine("add azure data");
+        AzureBlobs azureBlobs = new AzureBlobs();
+        //azureBlobs.UploadBlobAsync("qwe", @"P:\\KostPostMusic\\Music\\kish.mp3");
+
+        
+        
+
         InitializeComponent();
-        UserAccount = userAccount;
+        _account = account;
         UpdateButtonContent();
 
         mediaPlayer.Open(new Uri(@"P:\KostPostMusic\Music\kish.mp3", UriKind.RelativeOrAbsolute));
@@ -41,6 +50,7 @@ public partial class MusicKostPost : Window
         {
             MusicSlider.Value = mediaPlayer.Position.TotalMilliseconds;
         }
+
         CurrentTimeTextBlock.Text = mediaPlayer.Position.ToString(@"mm\:ss");
     }
 
@@ -65,6 +75,7 @@ public partial class MusicKostPost : Window
             }
         }
     }
+
     private void PlayPauseButton_Click(object sender, RoutedEventArgs e)
     {
         if (isPlaying)
@@ -77,6 +88,7 @@ public partial class MusicKostPost : Window
             mediaPlayer.Play();
             PlayPauseButton.Content = "Pause";
         }
+
         isPlaying = !isPlaying;
     }
 
@@ -103,7 +115,7 @@ public partial class MusicKostPost : Window
 
     private void UpdateButtonContent()
     {
-        UsernameButton.Content = $"{UserAccount.Username} \u25BC"; // Unicode for down arrow
+        UsernameButton.Content = $"{_account.Username} \u25BC"; // Unicode for down arrow
     }
 
     private void UsernameButton_Click(object sender, RoutedEventArgs e)

@@ -4,27 +4,24 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace ClassesData;
 
 [Table("accounts")]
-public abstract class Account
+public class Account
 {
-    [Key]
-    public int Id { get; set; }
+    [Key] [Column("id")] public int Id { get; set; }
 
-    [Required]
-    [StringLength(100)]
-    public string Username { get; set; }
+    [Required] [StringLength(100)] [Column("username")]  public string Username { get; set; }
 
-    [Required]
-    [StringLength(100)]
-    public string Password { get; set; }
+    [Required] [StringLength(100)] [Column("password")]  public string Password { get; set; }
 
-    [Required]
-    public AccountType AccountType { get; set; }
-    
-    public Account(string username, string password, AccountType accountType)
+    [Required] [StringLength(100)] [Column("account_type")] public string AccountType { get; set; }
+
+    [Column("admin_level")] public int? AdminLevel { get; set; }
+
+
+    public Account(string username, string password)
     {
         Username = username;
         Password = password;
-        AccountType = accountType;
+      
     }
 }
 

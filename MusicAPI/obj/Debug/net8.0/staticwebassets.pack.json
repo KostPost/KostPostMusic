@@ -1,0 +1,41 @@
+{
+  "Files": [
+    {
+      "Id": "P:\\KostPostMusic\\MusicAPI\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\MusicAPI.bundle.scp.css",
+      "PackagePath": "staticwebassets\\MusicAPI.bundle.scp.css"
+    },
+    {
+      "Id": "P:\\KostPostMusic\\MusicAPI\\wwwroot\\app.css",
+      "PackagePath": "staticwebassets\\app.css"
+    },
+    {
+      "Id": "P:\\KostPostMusic\\MusicAPI\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css"
+    },
+    {
+      "Id": "P:\\KostPostMusic\\MusicAPI\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "P:\\KostPostMusic\\MusicAPI\\wwwroot\\favicon.png",
+      "PackagePath": "staticwebassets\\favicon.png"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.MusicAPI.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.MusicAPI.props",
+      "PackagePath": "build\\MusicAPI.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.MusicAPI.props",
+      "PackagePath": "buildMultiTargeting\\MusicAPI.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.MusicAPI.props",
+      "PackagePath": "buildTransitive\\MusicAPI.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

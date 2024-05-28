@@ -22,4 +22,8 @@
       <ProjectReference Include="..\ClassesData\ClassesData.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Music\" />
+    </ItemGroup>
+
 </Project>

@@ -12,28 +12,35 @@ public class UserService
         _dbContext = dbContext;
     }
 
-    // public async Task<UserAccount?> GetUserByUsername(string username)
-    // {
-    //     return await _dbContext.Accounts.OfType<UserAccount>().FirstOrDefaultAsync(u => u.Username == username);
-    // }
-    
-    public async Task<UserAccount?>? GetUserByUsername(string username)
+    public async Task<Account?> GetUserByUsername(string username)
     {
-        return _dbContext.UserAccounts.FirstOrDefault(u => u.Username == username);
+        return await _dbContext.Accounts.FirstOrDefaultAsync(u => u.Username == username).ConfigureAwait(false);
     }
 
-    public async Task<bool> AddUserAccount(UserAccount userAccount)
+    public async Task<bool> AddUserAccount(Account account)
     {
-        var existingUser = await _dbContext.Accounts.FirstOrDefaultAsync(u => u.Username == userAccount.Username);
-
-        if (existingUser != null)
+        try
         {
+            if (account == null)
+            {
+                throw new ArgumentNullException(nameof(account));
+            }
+
+            var existingUser = await GetUserByUsername(account.Username).ConfigureAwait(false);
+            if (existingUser != null)
+            {
+                return false;
+            }
+
+            await _dbContext.Accounts.AddAsync(account).ConfigureAwait(false);
+            await _dbContext.SaveChangesAsync().ConfigureAwait(false);
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error adding user account: {ex.Message}");
             return false;
         }
-
-        await _dbContext.Accounts.AddAsync(userAccount);
-        await _dbContext.SaveChangesAsync();
-        return true;
     }
 }
 
@@ -42,12 +49,15 @@ public enum AuthenticationResult
 {
     Success,
     UserNotFound,
-    IncorrectPassword
+    IncorrectPassword,
+    Error
 }
 
 public enum RegistrationResult
 {
     Success,
     UserAlreadyExists,
+    InvalidInput,
+    DatabaseError,
     Error
 }

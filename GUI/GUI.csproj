@@ -11,6 +11,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\DataBaseActions\DataBaseActions.csproj" />
+      <ProjectReference Include="..\MusicAPI\MusicAPI.csproj" />
     </ItemGroup>
 
     <ItemGroup>

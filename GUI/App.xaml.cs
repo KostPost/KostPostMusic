@@ -88,7 +88,7 @@ public partial class App : Application
             string username = (string)key.GetValue("Username");
             key.Close();
         
-            MusicKostPost mainWindow = new MusicKostPost(new UserAccount(username, " "));
+            MusicKostPost mainWindow = new MusicKostPost(new Account(username, " "));
             mainWindow.Show();
         }
     }

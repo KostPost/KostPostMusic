@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataBaseActions", "DataBase
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassesData", "ClassesData\ClassesData.csproj", "{A56CBC7F-3F29-43B7-8482-307BE8681C5A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicAPI", "MusicAPI\MusicAPI.csproj", "{4DF9CA28-0972-450C-AAD5-6C8496BF225B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{A56CBC7F-3F29-43B7-8482-307BE8681C5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A56CBC7F-3F29-43B7-8482-307BE8681C5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A56CBC7F-3F29-43B7-8482-307BE8681C5A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DF9CA28-0972-450C-AAD5-6C8496BF225B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DF9CA28-0972-450C-AAD5-6C8496BF225B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DF9CA28-0972-450C-AAD5-6C8496BF225B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DF9CA28-0972-450C-AAD5-6C8496BF225B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
