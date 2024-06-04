@@ -28,12 +28,15 @@ public partial class AuthenticationWindow : Window
         string username = LoginUsernameTextBox.Text;
         string password = LoginPasswordBox.Password;
 
+
         AuthenticationResult authResult = await AuthenticateUser(username, password);
 
         switch (authResult)
         {
             case AuthenticationResult.Success:
-                App.SaveCredentials(username, password);
+                
+                App.SaveCredentials(username, password, Account.AccountType);
+                
                 OpenMainWindow(Account);
                 MessageTextBlock.Text = "Authorization successful!";
                 break;
@@ -115,6 +118,8 @@ public partial class AuthenticationWindow : Window
 
             Account = user;
 
+            Account.AccountType = user.AccountType;
+
             return AuthenticationResult.Success;
         }
         catch (Exception ex)
@@ -140,11 +145,7 @@ public partial class AuthenticationWindow : Window
                 return RegistrationResult.UserAlreadyExists;
             }
 
-            var newUser = new Account(username, password)
-            {
-                AccountType = AccountType.User.ToString(),
-                AdminLevel = null
-            };
+            var newUser = new Account(username, password, AccountType.User.ToString());
 
             bool isAdded = await _userService.AddUserAccount(newUser).ConfigureAwait(false);
             if (isAdded)
@@ -171,10 +172,19 @@ public partial class AuthenticationWindow : Window
     }
 
 
-    private void OpenMainWindow(Account user)
+    private void OpenMainWindow(Account account)
     {
-        MusicKostPost mainWindow = new MusicKostPost(user);
-        mainWindow.Show();
+        Console.WriteLine("OpenMainWindow" + account.AccountType);
+        if (account.AccountType == AccountType.User.ToString())
+        {
+            UserMainPage userMainPage = new UserMainPage(account);
+            userMainPage.Show();
+        } else if(account.AccountType == AccountType.Admin.ToString())
+        {
+            UserMainPage userMainPage = new UserMainPage(account);
+            userMainPage.Show();
+        }
+        
         Close();
     }
 }

@@ -17,12 +17,18 @@ public class Account
     [Column("admin_level")] public int? AdminLevel { get; set; }
 
 
-    public Account(string username, string password)
+    public Account(string username, string password,string accountType)
     {
         Username = username;
         Password = password;
-      
+        AccountType = accountType;
+
+        if (accountType == ClassesData.AccountType.User.ToString())
+        {
+            AdminLevel = null;
+        }
     }
+    
 }
 
 public enum AccountType

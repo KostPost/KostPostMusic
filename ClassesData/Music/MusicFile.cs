@@ -1,30 +1,27 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ClassesData.Music;
+namespace ClassesData.Music
 
 [Table("music_files")]
 public class MusicFile
 {
-    [Key]
-    public int Id { get; set; }
+    [Key] public int Id { get; set; }
 
-    [Required]
-    [StringLength(255)]
-    public string FileName { get; set; }
+    [Required] [StringLength(255)] public string FileName { get; set; }
 
-    [Required]
-    [StringLength(255)]
-    public string FilePath { get; set; }
+    [Required] [StringLength(255)] public string Album { get; set; }
 
-    [Required]
-    [StringLength(255)]
-    public string Authors { get; set; } 
+    public virtual ICollection<MusicAuthor> Authors { get; set; }
+}
 
-    [Required]
-    public TimeSpan Duration { get; set; } 
+[Table("music_authors")]
+public class MusicAuthor
+{
+    [Key] public int Id { get; set; }
 
-    public int Auditions { get; set; } 
+    [Required] [StringLength(255)] public string Name { get; set; }
 
-
+    public virtual ICollection<MusicFile> MusicFiles { get; set; }
 }

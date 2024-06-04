@@ -131,3 +131,7 @@ P:\KostPostMusic\GUI\bin\Debug\net8.0-windows\Azure.Storage.Common.dll
 P:\KostPostMusic\GUI\bin\Debug\net8.0-windows\System.ClientModel.dll
 P:\KostPostMusic\GUI\bin\Debug\net8.0-windows\System.IO.Hashing.dll
 P:\KostPostMusic\GUI\bin\Debug\net8.0-windows\System.Memory.Data.dll
+P:\KostPostMusic\GUI\obj\Debug\net8.0-windows\AdminMainPage.g.cs
+P:\KostPostMusic\GUI\obj\Debug\net8.0-windows\UserMainPage.g.cs
+P:\KostPostMusic\GUI\obj\Debug\net8.0-windows\AdminMainPage.baml
+P:\KostPostMusic\GUI\obj\Debug\net8.0-windows\UserMainPage.baml
