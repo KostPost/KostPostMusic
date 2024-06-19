@@ -46,10 +46,12 @@
     <Grid>
         <!-- Main content area -->
         <Grid Background="Black">
-            
-
             <!-- Username button -->
             <Button x:Name="UsernameButton" Style="{StaticResource UsernameButtonStyle}" Click="UsernameButton_Click" />
+
+            
+            <!-- Add Music button -->
+            <Button x:Name="AddMusicButton" Style="{StaticResource ButtonStyle}" Content="Add Music" Click="AddMusicButton_Click" Margin="20" HorizontalAlignment="Left" VerticalAlignment="Top" />
         </Grid>
     </Grid>
 </Window>

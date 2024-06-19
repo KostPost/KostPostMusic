@@ -1,6 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using Azure.Storage.Blobs;
 using ClassesData;
+using MusicAPI;
 
 namespace KostPostMusic;
 
@@ -9,13 +11,27 @@ public partial class AdminMainPage : Window
         public string AdminName { get; set; }
         private bool isMenuOpen = false;
 
+        // private readonly BlobServiceClient _blobServiceClient;
+        // private readonly AzureBlobs _azureBlobs;
+
+
         public AdminMainPage(Account account)
         {
             InitializeComponent();
+
+            // _azureBlobs = new AzureBlobs();
+            // _azureBlobs.UploadBlobAsync("virus", "C:\\Users\\KostPost\\Downloads\\virus.mp3");
+            
             AdminName = account.Username;
             DataContext = this;
         }
-
+        private void AddMusicButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Open the "Add Music" menu
+            AddMusicMenu addMusicMenu = new AddMusicMenu();
+            addMusicMenu.Owner = this; // Set the owner window
+            addMusicMenu.ShowDialog(); // Show the menu as a modal dialog
+        }
         private void UsernameButton_Click(object sender, RoutedEventArgs e)
         {
             if (!isMenuOpen)

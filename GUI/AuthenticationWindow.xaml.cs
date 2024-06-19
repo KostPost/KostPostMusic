@@ -23,6 +23,7 @@ public partial class AuthenticationWindow : Window
         _userService = new UserService(dbContext);
     }
 
+
     private async void LoginButton_Click(object sender, RoutedEventArgs e)
     {
         string username = LoginUsernameTextBox.Text;

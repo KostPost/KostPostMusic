@@ -1,0 +1,33 @@
+﻿<Window x:Class="KostPostMusic.AddMusicMenu"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:KostPostMusic"
+        mc:Ignorable="d"
+        Title="Add Music" Height="400" Width="400">
+    <Grid>
+        <StackPanel Margin="20">
+            <TextBlock Text="Add:" Margin="0,0,0,5" />
+            <StackPanel Orientation="Horizontal">
+                <RadioButton x:Name="SingleSongRadioButton" Content="Single Song" Checked="SingleSongRadioButton_Checked" IsChecked="True" Margin="0,0,10,0" />
+                <RadioButton x:Name="AlbumRadioButton" Content="Album" Checked="AlbumRadioButton_Checked" />
+            </StackPanel>
+
+            <TextBlock Text="MP3 File(s):" Margin="0,10,0,5" />
+            <Button x:Name="BrowseFileButton" Content="Browse..." Click="BrowseFileButton_Click" Margin="0,0,0,10" />
+            <TextBlock x:Name="SelectedFileTextBlock" Text="" Margin="0,0,0,10" />
+
+            <TextBlock Text="Music Name:" Margin="0,0,0,5" />
+            <TextBox x:Name="MusicNameTextBox" Margin="0,0,0,10" />
+
+            <TextBlock x:Name="AlbumNameTextBlockLabel" Text="Album Name:" Margin="0,0,0,5" Visibility="Collapsed" />
+            <TextBox x:Name="AlbumNameTextBox" Margin="0,0,0,10" Visibility="Collapsed" />
+
+            <TextBlock Text="Authors (comma-separated):" Margin="0,0,0,5" />
+            <TextBox x:Name="AuthorsTextBox" Margin="0,0,0,10" />
+
+            <Button x:Name="AddMusicButton" Content="Add Music" Click="AddMusicButton_Click" Margin="0,10" HorizontalAlignment="Right" />
+        </StackPanel>
+    </Grid>
+</Window>

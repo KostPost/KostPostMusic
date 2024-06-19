@@ -52,6 +52,8 @@
             <Button Style="{StaticResource ButtonStyle}" Content="Home" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10"/>
             <!-- Search button -->
             <Button Style="{StaticResource ButtonStyle}" Content="Search" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,70,0,0"/>
+            <Button x:Name="AddMusicButton" Style="{StaticResource ButtonStyle}" Content="Add Music" Click="AddMusicButton_Click" Margin="10,130,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+
 
             <!-- Username button -->
             <Button x:Name="UsernameButton" Style="{StaticResource UsernameButtonStyle}" Click="UsernameButton_Click" />

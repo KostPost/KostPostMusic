@@ -135,3 +135,6 @@ P:\KostPostMusic\GUI\obj\Debug\net8.0-windows\AdminMainPage.g.cs
 P:\KostPostMusic\GUI\obj\Debug\net8.0-windows\UserMainPage.g.cs
 P:\KostPostMusic\GUI\obj\Debug\net8.0-windows\AdminMainPage.baml
 P:\KostPostMusic\GUI\obj\Debug\net8.0-windows\UserMainPage.baml
+P:\KostPostMusic\GUI\bin\Debug\net8.0-windows\Microsoft.Extensions.Configuration.dll
+P:\KostPostMusic\GUI\obj\Debug\net8.0-windows\AddMusicMenu .g.cs
+P:\KostPostMusic\GUI\obj\Debug\net8.0-windows\AddMusicMenu .baml

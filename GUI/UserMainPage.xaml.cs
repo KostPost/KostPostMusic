@@ -28,7 +28,7 @@ public partial class UserMainPage : Window
         
          timer = new DispatcherTimer
          {
-             Interval = TimeSpan.FromMilliseconds(100) // Update the slider every 100 milliseconds
+             Interval = TimeSpan.FromMilliseconds(100) 
          };
          timer.Tick += Timer_Tick;
     }
@@ -45,6 +45,14 @@ public partial class UserMainPage : Window
         timer.Interval = TimeSpan.FromMilliseconds(100);
         timer.Tick += Timer_Tick;
     }
+     
+    private void AddMusicButton_Click(object sender, RoutedEventArgs e)
+    {
+        // Open the "Add Music" menu
+        AddMusicMenu addMusicMenu = new AddMusicMenu();
+        addMusicMenu.Owner = this; // Set the owner window
+        addMusicMenu.ShowDialog(); // Show the menu as a modal dialog
+    }
 
     
     private async void kishlackButton_Click(object sender, RoutedEventArgs e)
@@ -54,7 +62,7 @@ public partial class UserMainPage : Window
 
     private async void cupsizeButton_Click(object sender, RoutedEventArgs e)
     {
-        await PlayMusicAsync("cupsize");
+        await PlayMusicAsync("virus");
     }
 
     private async Task PlayMusicAsync(string trackName)

@@ -10,6 +10,7 @@
         "dependencies": {
           "DataBaseActions": "1.0.0",
           "Microsoft.EntityFrameworkCore.Design": "9.0.0-preview.3.24172.4",
+          "Microsoft.Extensions.Configuration": "9.0.0-preview.4.24266.19",
           "MusicAPI": "1.0.0",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "9.0.0-preview.3"
         },
@@ -383,7 +384,7 @@
       "Microsoft.EntityFrameworkCore.Relational/9.0.0-preview.3.24172.4": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "9.0.0-preview.3.24172.4",
-          "Microsoft.Extensions.Configuration.Abstractions": "9.0.0-preview.3.24172.9"
+          "Microsoft.Extensions.Configuration.Abstractions": "9.0.0-preview.4.24266.19"
         },
         "runtime": {
           "lib/net8.0/Microsoft.EntityFrameworkCore.Relational.dll": {
@@ -394,7 +395,7 @@
       },
       "Microsoft.Extensions.Caching.Abstractions/9.0.0-preview.3.24172.9": {
         "dependencies": {
-          "Microsoft.Extensions.Primitives": "9.0.0-preview.3.24172.9"
+          "Microsoft.Extensions.Primitives": "9.0.0-preview.4.24266.19"
         },
         "runtime": {
           "lib/net8.0/Microsoft.Extensions.Caching.Abstractions.dll": {
@@ -409,7 +410,7 @@
           "Microsoft.Extensions.DependencyInjection.Abstractions": "9.0.0-preview.3.24172.9",
           "Microsoft.Extensions.Logging.Abstractions": "9.0.0-preview.3.24172.9",
           "Microsoft.Extensions.Options": "9.0.0-preview.3.24172.9",
-          "Microsoft.Extensions.Primitives": "9.0.0-preview.3.24172.9"
+          "Microsoft.Extensions.Primitives": "9.0.0-preview.4.24266.19"
         },
         "runtime": {
           "lib/net8.0/Microsoft.Extensions.Caching.Memory.dll": {
@@ -418,14 +419,26 @@
           }
         }
       },
-      "Microsoft.Extensions.Configuration.Abstractions/9.0.0-preview.3.24172.9": {
+      "Microsoft.Extensions.Configuration/9.0.0-preview.4.24266.19": {
         "dependencies": {
-          "Microsoft.Extensions.Primitives": "9.0.0-preview.3.24172.9"
+          "Microsoft.Extensions.Configuration.Abstractions": "9.0.0-preview.4.24266.19",
+          "Microsoft.Extensions.Primitives": "9.0.0-preview.4.24266.19"
+        },
+        "runtime": {
+          "lib/net8.0/Microsoft.Extensions.Configuration.dll": {
+            "assemblyVersion": "9.0.0.0",
+            "fileVersion": "9.0.24.26619"
+          }
+        }
+      },
+      "Microsoft.Extensions.Configuration.Abstractions/9.0.0-preview.4.24266.19": {
+        "dependencies": {
+          "Microsoft.Extensions.Primitives": "9.0.0-preview.4.24266.19"
         },
         "runtime": {
           "lib/net8.0/Microsoft.Extensions.Configuration.Abstractions.dll": {
             "assemblyVersion": "9.0.0.0",
-            "fileVersion": "9.0.24.17209"
+            "fileVersion": "9.0.24.26619"
           }
         }
       },
@@ -487,7 +500,7 @@
       "Microsoft.Extensions.Options/9.0.0-preview.3.24172.9": {
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection.Abstractions": "9.0.0-preview.3.24172.9",
-          "Microsoft.Extensions.Primitives": "9.0.0-preview.3.24172.9"
+          "Microsoft.Extensions.Primitives": "9.0.0-preview.4.24266.19"
         },
         "runtime": {
           "lib/net8.0/Microsoft.Extensions.Options.dll": {
@@ -496,11 +509,11 @@
           }
         }
       },
-      "Microsoft.Extensions.Primitives/9.0.0-preview.3.24172.9": {
+      "Microsoft.Extensions.Primitives/9.0.0-preview.4.24266.19": {
         "runtime": {
           "lib/net8.0/Microsoft.Extensions.Primitives.dll": {
             "assemblyVersion": "9.0.0.0",
-            "fileVersion": "9.0.24.17209"
+            "fileVersion": "9.0.24.26619"
           }
         }
       },
@@ -711,6 +724,7 @@
       "DataBaseActions/1.0.0": {
         "dependencies": {
           "ClassesData": "1.0.0",
+          "MusicAPI": "1.0.0",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "9.0.0-preview.3"
         },
         "runtime": {
@@ -881,12 +895,19 @@
       "path": "microsoft.extensions.caching.memory/9.0.0-preview.3.24172.9",
       "hashPath": "microsoft.extensions.caching.memory.9.0.0-preview.3.24172.9.nupkg.sha512"
     },
-    "Microsoft.Extensions.Configuration.Abstractions/9.0.0-preview.3.24172.9": {
+    "Microsoft.Extensions.Configuration/9.0.0-preview.4.24266.19": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-LAZhuLfRq6ZFBLYMMXrnY7bUtn5tiIF1vsRhA40XuTMc593VoaXNp0IjBHwfbWqRjYGPuRYL5LGG0qP3mp+9/Q==",
-      "path": "microsoft.extensions.configuration.abstractions/9.0.0-preview.3.24172.9",
-      "hashPath": "microsoft.extensions.configuration.abstractions.9.0.0-preview.3.24172.9.nupkg.sha512"
+      "sha512": "sha512-uUEiYED9k5mLDOzZbGk7dbArk8aLqeGXKSDz2uofyResSPU7JjqenOJ24q2pAX/RzEnZF1CGlb+fv+8aManfJg==",
+      "path": "microsoft.extensions.configuration/9.0.0-preview.4.24266.19",
+      "hashPath": "microsoft.extensions.configuration.9.0.0-preview.4.24266.19.nupkg.sha512"
+    },
+    "Microsoft.Extensions.Configuration.Abstractions/9.0.0-preview.4.24266.19": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-VqqY6HHvbo4f5XTTagQDZf96WXuuJxA2sXjbJBQzxJmqy6x0XwtPb+7jF5vrsLJTpHCvDS4RPLIRvC/OVZzOlQ==",
+      "path": "microsoft.extensions.configuration.abstractions/9.0.0-preview.4.24266.19",
+      "hashPath": "microsoft.extensions.configuration.abstractions.9.0.0-preview.4.24266.19.nupkg.sha512"
     },
     "Microsoft.Extensions.DependencyInjection/9.0.0-preview.3.24172.9": {
       "type": "package",
@@ -930,12 +951,12 @@
       "path": "microsoft.extensions.options/9.0.0-preview.3.24172.9",
       "hashPath": "microsoft.extensions.options.9.0.0-preview.3.24172.9.nupkg.sha512"
     },
-    "Microsoft.Extensions.Primitives/9.0.0-preview.3.24172.9": {
+    "Microsoft.Extensions.Primitives/9.0.0-preview.4.24266.19": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-+Z0U5wqkxw687YJZijjQ/rwtIfv5nxrR3XuStq//klsyzqYoXMur2chHoHA9x+TkFzIZm8KX+Dr/jwaOdq28Jw==",
-      "path": "microsoft.extensions.primitives/9.0.0-preview.3.24172.9",
-      "hashPath": "microsoft.extensions.primitives.9.0.0-preview.3.24172.9.nupkg.sha512"
+      "sha512": "sha512-II0zFO+zjh/6hPmfIRkjq7ezTX/7xrsOl32vKtgGoz+46eXiJ5Jpo4QIjl9EIzy8xFltiP0Ex5dV2wpcGuwGWA==",
+      "path": "microsoft.extensions.primitives/9.0.0-preview.4.24266.19",
+      "hashPath": "microsoft.extensions.primitives.9.0.0-preview.4.24266.19.nupkg.sha512"
     },
     "Mono.TextTemplating/3.0.0-preview-0052-g5d0f76c785": {
       "type": "package",

@@ -518,10 +518,30 @@
           "buildTransitive/net8.0/_._": {}
         }
       },
-      "Microsoft.Extensions.Configuration.Abstractions/9.0.0-preview.3.24172.9": {
+      "Microsoft.Extensions.Configuration/9.0.0-preview.4.24266.19": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Extensions.Primitives": "9.0.0-preview.3.24172.9"
+          "Microsoft.Extensions.Configuration.Abstractions": "9.0.0-preview.4.24266.19",
+          "Microsoft.Extensions.Primitives": "9.0.0-preview.4.24266.19"
+        },
+        "compile": {
+          "lib/net8.0/Microsoft.Extensions.Configuration.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/Microsoft.Extensions.Configuration.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net8.0/_._": {}
+        }
+      },
+      "Microsoft.Extensions.Configuration.Abstractions/9.0.0-preview.4.24266.19": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Primitives": "9.0.0-preview.4.24266.19"
         },
         "compile": {
           "lib/net8.0/Microsoft.Extensions.Configuration.Abstractions.dll": {
@@ -652,7 +672,7 @@
           "buildTransitive/net8.0/Microsoft.Extensions.Options.targets": {}
         }
       },
-      "Microsoft.Extensions.Primitives/9.0.0-preview.3.24172.9": {
+      "Microsoft.Extensions.Primitives/9.0.0-preview.4.24266.19": {
         "type": "package",
         "compile": {
           "lib/net8.0/Microsoft.Extensions.Primitives.dll": {
@@ -1108,6 +1128,7 @@
         "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
           "ClassesData": "1.0.0",
+          "MusicAPI": "1.0.0",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "8.0.4"
         },
         "compile": {
@@ -2303,10 +2324,38 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "Microsoft.Extensions.Configuration.Abstractions/9.0.0-preview.3.24172.9": {
-      "sha512": "LAZhuLfRq6ZFBLYMMXrnY7bUtn5tiIF1vsRhA40XuTMc593VoaXNp0IjBHwfbWqRjYGPuRYL5LGG0qP3mp+9/Q==",
+    "Microsoft.Extensions.Configuration/9.0.0-preview.4.24266.19": {
+      "sha512": "uUEiYED9k5mLDOzZbGk7dbArk8aLqeGXKSDz2uofyResSPU7JjqenOJ24q2pAX/RzEnZF1CGlb+fv+8aManfJg==",
       "type": "package",
-      "path": "microsoft.extensions.configuration.abstractions/9.0.0-preview.3.24172.9",
+      "path": "microsoft.extensions.configuration/9.0.0-preview.4.24266.19",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
+        "PACKAGE.md",
+        "THIRD-PARTY-NOTICES.TXT",
+        "buildTransitive/net461/Microsoft.Extensions.Configuration.targets",
+        "buildTransitive/net462/_._",
+        "buildTransitive/net8.0/_._",
+        "buildTransitive/netcoreapp2.0/Microsoft.Extensions.Configuration.targets",
+        "lib/net462/Microsoft.Extensions.Configuration.dll",
+        "lib/net462/Microsoft.Extensions.Configuration.xml",
+        "lib/net8.0/Microsoft.Extensions.Configuration.dll",
+        "lib/net8.0/Microsoft.Extensions.Configuration.xml",
+        "lib/net9.0/Microsoft.Extensions.Configuration.dll",
+        "lib/net9.0/Microsoft.Extensions.Configuration.xml",
+        "lib/netstandard2.0/Microsoft.Extensions.Configuration.dll",
+        "lib/netstandard2.0/Microsoft.Extensions.Configuration.xml",
+        "microsoft.extensions.configuration.9.0.0-preview.4.24266.19.nupkg.sha512",
+        "microsoft.extensions.configuration.nuspec",
+        "useSharedDesignerContext.txt"
+      ]
+    },
+    "Microsoft.Extensions.Configuration.Abstractions/9.0.0-preview.4.24266.19": {
+      "sha512": "VqqY6HHvbo4f5XTTagQDZf96WXuuJxA2sXjbJBQzxJmqy6x0XwtPb+7jF5vrsLJTpHCvDS4RPLIRvC/OVZzOlQ==",
+      "type": "package",
+      "path": "microsoft.extensions.configuration.abstractions/9.0.0-preview.4.24266.19",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -2326,7 +2375,7 @@
         "lib/net9.0/Microsoft.Extensions.Configuration.Abstractions.xml",
         "lib/netstandard2.0/Microsoft.Extensions.Configuration.Abstractions.dll",
         "lib/netstandard2.0/Microsoft.Extensions.Configuration.Abstractions.xml",
-        "microsoft.extensions.configuration.abstractions.9.0.0-preview.3.24172.9.nupkg.sha512",
+        "microsoft.extensions.configuration.abstractions.9.0.0-preview.4.24266.19.nupkg.sha512",
         "microsoft.extensions.configuration.abstractions.nuspec",
         "useSharedDesignerContext.txt"
       ]
@@ -2565,10 +2614,10 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "Microsoft.Extensions.Primitives/9.0.0-preview.3.24172.9": {
-      "sha512": "+Z0U5wqkxw687YJZijjQ/rwtIfv5nxrR3XuStq//klsyzqYoXMur2chHoHA9x+TkFzIZm8KX+Dr/jwaOdq28Jw==",
+    "Microsoft.Extensions.Primitives/9.0.0-preview.4.24266.19": {
+      "sha512": "II0zFO+zjh/6hPmfIRkjq7ezTX/7xrsOl32vKtgGoz+46eXiJ5Jpo4QIjl9EIzy8xFltiP0Ex5dV2wpcGuwGWA==",
       "type": "package",
-      "path": "microsoft.extensions.primitives/9.0.0-preview.3.24172.9",
+      "path": "microsoft.extensions.primitives/9.0.0-preview.4.24266.19",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -2588,7 +2637,7 @@
         "lib/net9.0/Microsoft.Extensions.Primitives.xml",
         "lib/netstandard2.0/Microsoft.Extensions.Primitives.dll",
         "lib/netstandard2.0/Microsoft.Extensions.Primitives.xml",
-        "microsoft.extensions.primitives.9.0.0-preview.3.24172.9.nupkg.sha512",
+        "microsoft.extensions.primitives.9.0.0-preview.4.24266.19.nupkg.sha512",
         "microsoft.extensions.primitives.nuspec",
         "useSharedDesignerContext.txt"
       ]
@@ -3318,6 +3367,7 @@
     "net8.0-windows7.0": [
       "DataBaseActions >= 1.0.0",
       "Microsoft.EntityFrameworkCore.Design >= 9.0.0-preview.3.24172.4",
+      "Microsoft.Extensions.Configuration >= 9.0.0-preview.4.24266.19",
       "MusicAPI >= 1.0.0",
       "Npgsql.EntityFrameworkCore.PostgreSQL >= 9.0.0-preview.3"
     ]
@@ -3378,6 +3428,10 @@
             "suppressParent": "All",
             "target": "Package",
             "version": "[9.0.0-preview.3.24172.4, )"
+          },
+          "Microsoft.Extensions.Configuration": {
+            "target": "Package",
+            "version": "[9.0.0-preview.4.24266.19, )"
           },
           "Npgsql.EntityFrameworkCore.PostgreSQL": {
             "target": "Package",

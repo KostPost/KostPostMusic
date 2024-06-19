@@ -6,5 +6,4 @@ public class Track
     public string Title { get; set; }
     public string Artist { get; set; }
     public string Duration { get; set; }
-    // Add more properties as needed
 }

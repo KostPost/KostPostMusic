@@ -93,6 +93,9 @@
             "projectReferences": {
               "P:\\KostPostMusic\\ClassesData\\ClassesData.csproj": {
                 "projectPath": "P:\\KostPostMusic\\ClassesData\\ClassesData.csproj"
+              },
+              "P:\\KostPostMusic\\MusicAPI\\MusicAPI.csproj": {
+                "projectPath": "P:\\KostPostMusic\\MusicAPI\\MusicAPI.csproj"
               }
             }
           }
@@ -196,6 +199,10 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[9.0.0-preview.3.24172.4, )"
+            },
+            "Microsoft.Extensions.Configuration": {
+              "target": "Package",
+              "version": "[9.0.0-preview.4.24266.19, )"
             },
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
