@@ -60,33 +60,48 @@ public class KostPostMusicContext : DbContext
                 .IsRequired()
                 .HasMaxLength(255);
 
-            // If AuthorID is a foreign key to the Accounts table
             entity.HasOne<Account>()
                 .WithMany()
                 .HasForeignKey(m => m.AuthorID);
         });
+
+        modelBuilder.Entity<Playlist>(entity =>
+        {
+            entity.ToTable("playlists");
+
+            entity.HasKey(e => e.Id);
+
+            entity.Property(e => e.Name)
+                .IsRequired()
+                .HasMaxLength(255);
+
+            entity.Property(e => e.OwnerId)
+                .IsRequired();
+
+            entity.Property(e => e.Description)
+                .HasMaxLength(1000);
+
+            entity.HasOne<Account>()
+                .WithMany()
+                .HasForeignKey(p => p.OwnerId);
+
+            entity.HasMany(p => p.Songs)
+                .WithMany()
+                .UsingEntity<Dictionary<string, object>>(
+                    "PlaylistSongs",
+                    j => j
+                        .HasOne<MusicData>()
+                        .WithMany()
+                        .HasForeignKey("SongId"),
+                    j => j
+                        .HasOne<Playlist>()
+                        .WithMany()
+                        .HasForeignKey("PlaylistId"),
+                    j =>
+                    {
+                        j.HasKey("PlaylistId", "SongId");
+                        j.ToTable("playlist_songs");
+                    });
+        });
     }
-    // protected override void OnModelCreating(ModelBuilder modelBuilder)
-    // {
-    //     modelBuilder.Entity<MusicData>(entity =>
-    //     {
-    //         entity.ToTable("music_data");
-    //
-    //         entity.HasKey(e => e.Id);
-    //
-    //         entity.Property(e => e.FileName)
-    //             .IsRequired()
-    //             .HasMaxLength(255);
-    //
-    //         entity.Property(e => e.AuthorID)
-    //             .IsRequired();
-    //
-    //         entity.Property(e => e.PlayCount)
-    //             .HasDefaultValue(0);
-    //
-    //         entity.Property(e => e.AuthorName)
-    //             .IsRequired()
-    //             .HasMaxLength(255);
-    //     });
-    // }
 }

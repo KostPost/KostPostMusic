@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="f6f68c62-5931-4573-929d-e2456b55f60c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/ClassesData/Music/Playlist.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ClassesData/Music/SearchResult.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClassesData/bin/Debug/net8.0/ClassesData.dll" beforeDir="false" afterPath="$PROJECT_DIR$/ClassesData/bin/Debug/net8.0/ClassesData.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClassesData/bin/Debug/net8.0/ClassesData.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/ClassesData/bin/Debug/net8.0/ClassesData.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClassesData/obj/Debug/net8.0/ClassesData.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ClassesData/obj/Debug/net8.0/ClassesData.AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClassesData/obj/Debug/net8.0/ClassesData.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/ClassesData/obj/Debug/net8.0/ClassesData.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClassesData/obj/Debug/net8.0/ClassesData.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/ClassesData/obj/Debug/net8.0/ClassesData.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClassesData/obj/Debug/net8.0/ClassesData.dll" beforeDir="false" afterPath="$PROJECT_DIR$/ClassesData/obj/Debug/net8.0/ClassesData.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClassesData/obj/Debug/net8.0/ClassesData.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/ClassesData/obj/Debug/net8.0/ClassesData.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClassesData/obj/Debug/net8.0/ClassesData.sourcelink.json" beforeDir="false" afterPath="$PROJECT_DIR$/ClassesData/obj/Debug/net8.0/ClassesData.sourcelink.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClassesData/obj/Debug/net8.0/ref/ClassesData.dll" beforeDir="false" afterPath="$PROJECT_DIR$/ClassesData/obj/Debug/net8.0/ref/ClassesData.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClassesData/obj/Debug/net8.0/refint/ClassesData.dll" beforeDir="false" afterPath="$PROJECT_DIR$/ClassesData/obj/Debug/net8.0/refint/ClassesData.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataBaseActions/KostPostMusicContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataBaseActions/KostPostMusicContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataBaseActions/bin/Debug/net8.0/ClassesData.dll" beforeDir="false" afterPath="$PROJECT_DIR$/DataBaseActions/bin/Debug/net8.0/ClassesData.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataBaseActions/bin/Debug/net8.0/ClassesData.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/DataBaseActions/bin/Debug/net8.0/ClassesData.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataBaseActions/bin/Debug/net8.0/DataBaseActions.dll" beforeDir="false" afterPath="$PROJECT_DIR$/DataBaseActions/bin/Debug/net8.0/DataBaseActions.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataBaseActions/bin/Debug/net8.0/DataBaseActions.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/DataBaseActions/bin/Debug/net8.0/DataBaseActions.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataBaseActions/obj/Debug/net8.0/DataBaseActions.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataBaseActions/obj/Debug/net8.0/DataBaseActions.AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataBaseActions/obj/Debug/net8.0/DataBaseActions.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/DataBaseActions/obj/Debug/net8.0/DataBaseActions.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataBaseActions/obj/Debug/net8.0/DataBaseActions.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/DataBaseActions/obj/Debug/net8.0/DataBaseActions.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataBaseActions/obj/Debug/net8.0/DataBaseActions.dll" beforeDir="false" afterPath="$PROJECT_DIR$/DataBaseActions/obj/Debug/net8.0/DataBaseActions.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataBaseActions/obj/Debug/net8.0/DataBaseActions.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/DataBaseActions/obj/Debug/net8.0/DataBaseActions.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataBaseActions/obj/Debug/net8.0/DataBaseActions.sourcelink.json" beforeDir="false" afterPath="$PROJECT_DIR$/DataBaseActions/obj/Debug/net8.0/DataBaseActions.sourcelink.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataBaseActions/obj/Debug/net8.0/ref/DataBaseActions.dll" beforeDir="false" afterPath="$PROJECT_DIR$/DataBaseActions/obj/Debug/net8.0/ref/DataBaseActions.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataBaseActions/obj/Debug/net8.0/refint/DataBaseActions.dll" beforeDir="false" afterPath="$PROJECT_DIR$/DataBaseActions/obj/Debug/net8.0/refint/DataBaseActions.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUI/UserMainPage.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/UserMainPage.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUI/UserMainPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/UserMainPage.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUI/bin/Debug/net8.0-windows/ClassesData.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/bin/Debug/net8.0-windows/ClassesData.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUI/bin/Debug/net8.0-windows/ClassesData.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/bin/Debug/net8.0-windows/ClassesData.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUI/bin/Debug/net8.0-windows/DataBaseActions.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/bin/Debug/net8.0-windows/DataBaseActions.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUI/bin/Debug/net8.0-windows/DataBaseActions.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/bin/Debug/net8.0-windows/DataBaseActions.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUI/bin/Debug/net8.0-windows/GUI.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/bin/Debug/net8.0-windows/GUI.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUI/bin/Debug/net8.0-windows/GUI.exe" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/bin/Debug/net8.0-windows/GUI.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUI/bin/Debug/net8.0-windows/GUI.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/bin/Debug/net8.0-windows/GUI.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUI/obj/Debug/net8.0-windows/GUI.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/obj/Debug/net8.0-windows/GUI.AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUI/obj/Debug/net8.0-windows/GUI.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/obj/Debug/net8.0-windows/GUI.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUI/obj/Debug/net8.0-windows/GUI.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/obj/Debug/net8.0-windows/GUI.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUI/obj/Debug/net8.0-windows/GUI.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/obj/Debug/net8.0-windows/GUI.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUI/obj/Debug/net8.0-windows/GUI.g.resources" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/obj/Debug/net8.0-windows/GUI.g.resources" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUI/obj/Debug/net8.0-windows/GUI.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/obj/Debug/net8.0-windows/GUI.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUI/obj/Debug/net8.0-windows/GUI.sourcelink.json" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/obj/Debug/net8.0-windows/GUI.sourcelink.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUI/obj/Debug/net8.0-windows/UserMainPage.baml" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/obj/Debug/net8.0-windows/UserMainPage.baml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUI/obj/Debug/net8.0-windows/UserMainPage.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/obj/Debug/net8.0-windows/UserMainPage.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUI/obj/Debug/net8.0-windows/apphost.exe" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/obj/Debug/net8.0-windows/apphost.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUI/obj/Debug/net8.0-windows/ref/GUI.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/obj/Debug/net8.0-windows/ref/GUI.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUI/obj/Debug/net8.0-windows/refint/GUI.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/obj/Debug/net8.0-windows/refint/GUI.dll" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="2iF923hiIpPgqPKUaG9icHbQnN4" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenDatabaseViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;P:/KostPostMusic&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
+    ]
+  }
+}</component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+</project>

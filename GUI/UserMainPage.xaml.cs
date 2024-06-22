@@ -1,11 +1,13 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 using ClassesData;
 using ClassesData.Music;
 using DataBaseActions;
+using Microsoft.EntityFrameworkCore;
 using MusicAPI;
 using Track = System.Windows.Controls.Primitives.Track;
 
@@ -18,66 +20,28 @@ public partial class UserMainPage : Window
     private MediaPlayer mediaPlayer = new MediaPlayer();
     private DispatcherTimer timer;
     private bool isPlaying = false;
-    private List<MusicData> allUserMusic;
 
+    private MusicData currentMusic;
 
     
   
     public UserMainPage(Account account)
     {
         InitializeComponent();
-         _account = account;
-         UpdateButtonContent();
-        
-         //InitializeMediaPlayer();
-        
-         timer = new DispatcherTimer
-         {
-             Interval = TimeSpan.FromMilliseconds(100) 
-         };
-         timer.Tick += Timer_Tick;
-    }
-     public void InitializeMediaPlayer()
-    {
-        AzureBlobs azureBlobs = new AzureBlobs();
-        string sasUrl = azureBlobs.GetBlobSasUri("kishlack");
-    
-        mediaPlayer.Open(new Uri(sasUrl, UriKind.Absolute));
-        mediaPlayer.MediaOpened += MediaPlayer_MediaOpened;
-    
-        timer = new DispatcherTimer();
-        timer.Interval = TimeSpan.FromMilliseconds(100);
+        _account = account;
+        UpdateButtonContent();
+
+        timer = new DispatcherTimer
+        {
+            Interval = TimeSpan.FromMilliseconds(100) 
+        };
         timer.Tick += Timer_Tick;
-    }
-     
-    private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
-    {
-        string searchText = SearchTextBox.Text.ToLower();
-        var filteredResults = allUserMusic
-            .Where(m => m.FileName.ToLower().Contains(searchText))
-            .ToList();
-    
-        SearchResultsListBox.ItemsSource = filteredResults;
+
+        mediaPlayer.MediaOpened += MediaPlayer_MediaOpened;
+
+        UpdateCurrentMusicDisplay();
     }
 
-    private void SearchResultsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-        if (SearchResultsListBox.SelectedItem is MusicData selectedMusic)
-        {
-            PlayMusicAsync(selectedMusic.FileName);
-        }
-    }
-
-    private void LoadUserMusic()
-    {
-        using (var context = new KostPostMusicContext())
-        {
-            allUserMusic = context.MusicFiles
-                .Where(m => m.AuthorID == _account.Id)
-                .ToList();
-        }
-    }
-     
     private void AddMusicButton_Click(object sender, RoutedEventArgs e)
     {
       
@@ -92,15 +56,69 @@ public partial class UserMainPage : Window
         deleteMusicWindow.Owner = this;
         deleteMusicWindow.ShowDialog();
     }
+    
+    private ListBox GetSearchResultsListBox()
+    {
+        return this.FindName("SearchResults") as ListBox;
+    }
+    private async void SearchInput_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        string searchTerm = SearchInput.Text.Trim().ToLower();
+        if (string.IsNullOrEmpty(searchTerm))
+        {
+            SearchResults.Visibility = Visibility.Collapsed;
+            return;
+        }
+
+        using (var context = new KostPostMusicContext())
+        {
+            var results = await context.MusicFiles
+                .Where(m => m.FileName.ToLower().Contains(searchTerm) || m.AuthorName.ToLower().Contains(searchTerm))
+                .Select(m => new SearchResult 
+                { 
+                    Id = m.Id, 
+                    DisplayName = $"{m.AuthorName} - {System.IO.Path.GetFileNameWithoutExtension(m.FileName)}", 
+                    FileName = m.FileName 
+                })
+                .ToListAsync();
+
+            SearchResults.ItemsSource = results;
+            SearchResults.Visibility = results.Any() ? Visibility.Visible : Visibility.Collapsed;
+        }
+    }
+
+    private async void SearchResults_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (SearchResults.SelectedItem is SearchResult selectedItem)
+        {
+            string fileName = selectedItem.FileName;
+            await PlayMusicAsync(fileName);
+            SearchInput.Text = string.Empty;
+            SearchResults.Visibility = Visibility.Collapsed;
+        }
+    }
     private async Task PlayMusicAsync(string trackName)
     {
         try
         {
             AzureBlobs azureBlobs = new AzureBlobs();
-            string sasUrl = azureBlobs.GetBlobSasUri(trackName);  // Ensure this method is async
+            string sasUrl = azureBlobs.GetBlobSasUri(trackName);
             mediaPlayer.Open(new Uri(sasUrl, UriKind.Absolute));
             mediaPlayer.Play();
             UpdatePlayPauseButton(true);
+
+            MusicSlider.Value = 0;
+            UpdateTimeDisplay();
+
+            // Start the timer
+            timer.Start();
+
+            // Update current music
+            using (var context = new KostPostMusicContext())
+            {
+                currentMusic = await context.MusicFiles.FirstOrDefaultAsync(m => m.FileName == trackName);
+            }
+            UpdateCurrentMusicDisplay();
         }
         catch (Exception ex)
         {
@@ -119,13 +137,20 @@ public partial class UserMainPage : Window
         {
             mediaPlayer.Pause();
             PlayPauseButton.Content = "Play";
+            timer.Stop();
         }
         else
         {
-            if (mediaPlayer.Source != null) // Ensure there is a media loaded
+            if (mediaPlayer.Source != null)
             {
                 mediaPlayer.Play();
                 PlayPauseButton.Content = "Pause";
+                timer.Start();
+            }
+            else
+            {
+                MessageBox.Show("No music selected. Please choose a track to play.", "No Music", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
             }
         }
         isPlaying = !isPlaying;
@@ -139,73 +164,79 @@ public partial class UserMainPage : Window
 
     private void Timer_Tick(object sender, EventArgs e)
     {
-        if (!isDraggingSlider)
+        if (mediaPlayer.Source != null && mediaPlayer.NaturalDuration.HasTimeSpan)
         {
-            MusicSlider.Value = mediaPlayer.Position.TotalMilliseconds;
+            if (!isDraggingSlider)
+            {
+                MusicSlider.Value = mediaPlayer.Position.TotalSeconds;
+            }
+            UpdateTimeDisplay();
         }
-
-        CurrentTimeTextBlock.Text = mediaPlayer.Position.ToString(@"mm\:ss");
     }
-
     private void MediaPlayer_MediaOpened(object sender, EventArgs e)
     {
-        MusicSlider.Maximum = mediaPlayer.NaturalDuration.TimeSpan.TotalMilliseconds;
-        timer.Start();
-        AttachSliderThumbEvents();
-        TotalTimeTextBlock.Text = mediaPlayer.NaturalDuration.TimeSpan.ToString(@"mm\:ss");
-    }
-
-    private void AttachSliderThumbEvents()
-    {
-        var track = MusicSlider.Template.FindName("PART_Track", MusicSlider) as Track;
-        if (track != null)
+        if (mediaPlayer.NaturalDuration.HasTimeSpan)
         {
-            var thumb = track.Thumb;
-            if (thumb != null)
-            {
-                thumb.DragStarted += MusicSlider_DragStarted;
-                thumb.DragCompleted += MusicSlider_DragCompleted;
-            }
+            MusicSlider.Minimum = 0;
+            MusicSlider.Maximum = mediaPlayer.NaturalDuration.TimeSpan.TotalSeconds;
+            MusicSlider.SmallChange = 1;
+            MusicSlider.LargeChange = Math.Min(10, mediaPlayer.NaturalDuration.TimeSpan.TotalSeconds / 10);
         }
+        UpdateTimeDisplay();
     }
 
-    // private void PlayPauseButton_Click(object sender, RoutedEventArgs e)
+    // private void AttachSliderThumbEvents()
     // {
-    //     if (isPlaying)
+    //     var track = MusicSlider.Template.FindName("PART_Track", MusicSlider) as Track;
+    //     if (track != null)
     //     {
-    //         mediaPlayer.Pause();
-    //         PlayPauseButton.Content = "Play";
+    //         var thumb = track.Thumb;
+    //         if (thumb != null)
+    //         {
+    //             thumb.DragStarted += MusicSlider_DragStarted;
+    //             thumb.DragCompleted += MusicSlider_DragCompleted;
+    //         }
     //     }
-    //     else
-    //     {
-    //         mediaPlayer.Play();
-    //         PlayPauseButton.Content = "Pause";
-    //     }
-    //
-    //     isPlaying = !isPlaying;
     // }
+
+    
 
     private bool isDraggingSlider = false;
 
-    private void MusicSlider_DragStarted(object sender, DragStartedEventArgs e)
+    private void MusicSlider_PreviewMouseDown(object sender, MouseButtonEventArgs e)
     {
         isDraggingSlider = true;
     }
 
-    private void MusicSlider_DragCompleted(object sender, DragCompletedEventArgs e)
+    private void MusicSlider_PreviewMouseUp(object sender, MouseButtonEventArgs e)
     {
         isDraggingSlider = false;
-        mediaPlayer.Position = TimeSpan.FromMilliseconds(MusicSlider.Value);
+        mediaPlayer.Position = TimeSpan.FromSeconds(MusicSlider.Value);
     }
 
     private void MusicSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
     {
         if (!isDraggingSlider)
         {
-            mediaPlayer.Position = TimeSpan.FromMilliseconds(e.NewValue);
+            mediaPlayer.Position = TimeSpan.FromSeconds(e.NewValue);
         }
+        UpdateTimeDisplay();
     }
     
+    private void UpdateTimeDisplay()
+    {
+        if (mediaPlayer.Source != null && mediaPlayer.NaturalDuration.HasTimeSpan)
+        {
+            CurrentTimeTextBlock.Text = mediaPlayer.Position.ToString(@"mm\:ss");
+            TotalTimeTextBlock.Text = mediaPlayer.NaturalDuration.TimeSpan.ToString(@"mm\:ss");
+        }
+        else
+        {
+            CurrentTimeTextBlock.Text = "00:00";
+            TotalTimeTextBlock.Text = "00:00";
+        }
+    }
+
     private void VolumeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
     {
         mediaPlayer.Volume = e.NewValue;
@@ -251,6 +282,18 @@ public partial class UserMainPage : Window
                 menu.IsOpen = false;
                 isMenuOpen = false;
             }
+        }
+    }
+    
+    private void UpdateCurrentMusicDisplay()
+    {
+        if (currentMusic != null)
+        {
+            CurrentMusicTextBlock.Text = $"Now Playing: {currentMusic.AuthorName} - {System.IO.Path.GetFileNameWithoutExtension(currentMusic.FileName)}";
+        }
+        else
+        {
+            CurrentMusicTextBlock.Text = "No music playing";
         }
     }
 

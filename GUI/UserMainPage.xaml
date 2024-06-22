@@ -1,5 +1,5 @@
 ﻿<Window x:Class="KostPostMusic.UserMainPage"
-     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -44,6 +44,24 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+
+        <!-- Style for the search input -->
+        <Style x:Key="SearchInputStyle" TargetType="TextBox">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="Gray"/>
+        </Style>
+
+        <!-- Style for the search results -->
+        <Style x:Key="SearchResultsStyle" TargetType="ListBox">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="Gray"/>
+        </Style>
     </Window.Resources>
     <Grid>
         <!-- Main content area -->
@@ -55,22 +73,44 @@
             <Button x:Name="AddMusicButton" Style="{StaticResource ButtonStyle}" Content="Add Music" Click="AddMusicButton_Click" Margin="10,130,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
             <Button x:Name="DeleteMusicButton" Style="{StaticResource ButtonStyle}" Content="Delete Music" Click="DeleteMusicButton_Click" Margin="10,190,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
 
-            
-            <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,250,0,0" Width="200">
-                <TextBox x:Name="SearchTextBox" PlaceholderText="Search music..." Margin="0,0,0,10" TextChanged="SearchTextBox_TextChanged"/>
-                <ListBox x:Name="SearchResultsListBox" Height="200" SelectionChanged="SearchResultsListBox_SelectionChanged"/>
-            </StackPanel>
-
             <!-- Username button -->
             <Button x:Name="UsernameButton" Style="{StaticResource UsernameButtonStyle}" Click="UsernameButton_Click" />
+
+            <!-- Search input and results -->
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,20,0,0" Width="300">
+                <Grid>
+                    <TextBox x:Name="SearchInput" Style="{StaticResource SearchInputStyle}" Margin="0,0,0,10" TextChanged="SearchInput_TextChanged"/>
+                    <TextBlock IsHitTestVisible="False" Text="Search for music..." VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0" Foreground="DarkGray">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Text, ElementName=SearchInput}" Value="">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Grid>
+                <ListBox x:Name="SearchResults" Style="{StaticResource SearchResultsStyle}" Height="200" Visibility="Collapsed" SelectionChanged="SearchResults_SelectionChanged">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding DisplayName}"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+            
+            
 
             <!-- Music player controls -->
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,20">
                 <Button x:Name="PlayPauseButton" Content="Play" Click="PlayPauseButton_Click" Margin="10" Padding="10,5" Width="100" />
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,20">
-                    <TextBlock x:Name="CurrentTimeTextBlock" Foreground="White" VerticalAlignment="Center" Margin="10,0"/>
-                    <Slider x:Name="MusicSlider" Width="300" ValueChanged="MusicSlider_ValueChanged" />
-                    <TextBlock x:Name="TotalTimeTextBlock" Foreground="White" VerticalAlignment="Center" Margin="10,0"/>
+                    <TextBlock x:Name="CurrentTimeTextBlock" Foreground="White" VerticalAlignment="Center" Margin="10,0" Width="50" TextAlignment="Right"/>
+                    <Slider x:Name="MusicSlider" Width="300" ValueChanged="MusicSlider_ValueChanged" PreviewMouseDown="MusicSlider_PreviewMouseDown" PreviewMouseUp="MusicSlider_PreviewMouseUp" />
+                    <TextBlock x:Name="TotalTimeTextBlock" Foreground="White" VerticalAlignment="Center" Margin="10,0" Width="50"/>
                 </StackPanel>
             </StackPanel>
 
@@ -79,11 +119,14 @@
                 <TextBlock Text="Volume" Foreground="White" VerticalAlignment="Center" Margin="10,0"/>
                 <Slider x:Name="VolumeSlider" Width="150" Minimum="0" Maximum="1" Value="0.5" ValueChanged="VolumeSlider_ValueChanged"/>
             </StackPanel>
+
+            <!-- Current music display -->
+            <TextBlock x:Name="CurrentMusicTextBlock" 
+                       HorizontalAlignment="Left" 
+                       VerticalAlignment="Bottom" 
+                       Margin="20,0,0,20" 
+                       Foreground="White" 
+                       FontSize="14"/>
         </Grid>
-        
-        <!-- <Grid> -->
-        <!--     <Button x:Name="kishlackButton" Content="kishlack" Style="{StaticResource ButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10,100,0,0" Width="100" Height="50" Click="kishlackButton_Click"/> -->
-        <!--     <Button x:Name="cupsizeButton" Content="cupsize" Style="{StaticResource ButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10,160,0,0" Width="100" Height="50" Click="cupsizeButton_Click"/> -->
-        <!-- </Grid> -->
     </Grid>
 </Window>
