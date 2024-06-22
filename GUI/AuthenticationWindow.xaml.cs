@@ -36,7 +36,7 @@ public partial class AuthenticationWindow : Window
         {
             case AuthenticationResult.Success:
                 
-                App.SaveCredentials(username, password, Account.AccountType);
+                App.SaveCredentials(Account.Id,username, password, Account.AccountType);
                 
                 OpenMainWindow(Account);
                 MessageTextBlock.Text = "Authorization successful!";

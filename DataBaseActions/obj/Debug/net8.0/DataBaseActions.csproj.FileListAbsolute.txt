@@ -16,11 +16,3 @@ P:\KostPostMusic\DataBaseActions\obj\Debug\net8.0\ref\DataBaseActions.dll
 P:\KostPostMusic\DataBaseActions\bin\Debug\net8.0\DataBaseActions.runtimeconfig.json
 P:\KostPostMusic\DataBaseActions\obj\Debug\net8.0\DataBaseActions.genruntimeconfig.cache
 P:\KostPostMusic\DataBaseActions\obj\Debug\net8.0\DataBaseActions.sourcelink.json
-P:\KostPostMusic\DataBaseActions\bin\Debug\net8.0\MusicAPI.deps.json
-P:\KostPostMusic\DataBaseActions\bin\Debug\net8.0\MusicAPI.runtimeconfig.json
-P:\KostPostMusic\DataBaseActions\bin\Debug\net8.0\appsettings.Development.json
-P:\KostPostMusic\DataBaseActions\bin\Debug\net8.0\appsettings.json
-P:\KostPostMusic\DataBaseActions\bin\Debug\net8.0\MusicAPI.staticwebassets.runtime.json
-P:\KostPostMusic\DataBaseActions\bin\Debug\net8.0\MusicAPI.exe
-P:\KostPostMusic\DataBaseActions\bin\Debug\net8.0\MusicAPI.dll
-P:\KostPostMusic\DataBaseActions\bin\Debug\net8.0\MusicAPI.pdb

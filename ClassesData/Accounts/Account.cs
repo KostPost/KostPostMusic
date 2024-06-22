@@ -28,6 +28,18 @@ public class Account
             AdminLevel = null;
         }
     }
+    public Account(int id,string username, string password,string accountType)
+    {
+        Id = id;
+        Username = username;
+        Password = password;
+        AccountType = accountType;
+
+        if (accountType == ClassesData.AccountType.User.ToString())
+        {
+            AdminLevel = null;
+        }
+    }
     
 }
 

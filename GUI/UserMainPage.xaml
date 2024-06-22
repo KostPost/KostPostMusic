@@ -53,7 +53,13 @@
             <!-- Search button -->
             <Button Style="{StaticResource ButtonStyle}" Content="Search" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,70,0,0"/>
             <Button x:Name="AddMusicButton" Style="{StaticResource ButtonStyle}" Content="Add Music" Click="AddMusicButton_Click" Margin="10,130,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+            <Button x:Name="DeleteMusicButton" Style="{StaticResource ButtonStyle}" Content="Delete Music" Click="DeleteMusicButton_Click" Margin="10,190,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
 
+            
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,250,0,0" Width="200">
+                <TextBox x:Name="SearchTextBox" PlaceholderText="Search music..." Margin="0,0,0,10" TextChanged="SearchTextBox_TextChanged"/>
+                <ListBox x:Name="SearchResultsListBox" Height="200" SelectionChanged="SearchResultsListBox_SelectionChanged"/>
+            </StackPanel>
 
             <!-- Username button -->
             <Button x:Name="UsernameButton" Style="{StaticResource UsernameButtonStyle}" Click="UsernameButton_Click" />
@@ -75,9 +81,9 @@
             </StackPanel>
         </Grid>
         
-        <Grid>
-            <Button x:Name="kishlackButton" Content="kishlack" Style="{StaticResource ButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10,100,0,0" Width="100" Height="50" Click="kishlackButton_Click"/>
-            <Button x:Name="cupsizeButton" Content="cupsize" Style="{StaticResource ButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10,160,0,0" Width="100" Height="50" Click="cupsizeButton_Click"/>
-        </Grid>
+        <!-- <Grid> -->
+        <!--     <Button x:Name="kishlackButton" Content="kishlack" Style="{StaticResource ButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10,100,0,0" Width="100" Height="50" Click="kishlackButton_Click"/> -->
+        <!--     <Button x:Name="cupsizeButton" Content="cupsize" Style="{StaticResource ButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10,160,0,0" Width="100" Height="50" Click="cupsizeButton_Click"/> -->
+        <!-- </Grid> -->
     </Grid>
 </Window>

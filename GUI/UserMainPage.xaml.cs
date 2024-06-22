@@ -4,6 +4,8 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using System.Windows.Threading;
 using ClassesData;
+using ClassesData.Music;
+using DataBaseActions;
 using MusicAPI;
 using Track = System.Windows.Controls.Primitives.Track;
 
@@ -16,15 +18,18 @@ public partial class UserMainPage : Window
     private MediaPlayer mediaPlayer = new MediaPlayer();
     private DispatcherTimer timer;
     private bool isPlaying = false;
+    private List<MusicData> allUserMusic;
+
 
     
+  
     public UserMainPage(Account account)
     {
         InitializeComponent();
          _account = account;
          UpdateButtonContent();
         
-         InitializeMediaPlayer();
+         //InitializeMediaPlayer();
         
          timer = new DispatcherTimer
          {
@@ -32,7 +37,6 @@ public partial class UserMainPage : Window
          };
          timer.Tick += Timer_Tick;
     }
-    
      public void InitializeMediaPlayer()
     {
         AzureBlobs azureBlobs = new AzureBlobs();
@@ -46,25 +50,48 @@ public partial class UserMainPage : Window
         timer.Tick += Timer_Tick;
     }
      
+    private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        string searchText = SearchTextBox.Text.ToLower();
+        var filteredResults = allUserMusic
+            .Where(m => m.FileName.ToLower().Contains(searchText))
+            .ToList();
+    
+        SearchResultsListBox.ItemsSource = filteredResults;
+    }
+
+    private void SearchResultsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (SearchResultsListBox.SelectedItem is MusicData selectedMusic)
+        {
+            PlayMusicAsync(selectedMusic.FileName);
+        }
+    }
+
+    private void LoadUserMusic()
+    {
+        using (var context = new KostPostMusicContext())
+        {
+            allUserMusic = context.MusicFiles
+                .Where(m => m.AuthorID == _account.Id)
+                .ToList();
+        }
+    }
+     
     private void AddMusicButton_Click(object sender, RoutedEventArgs e)
     {
-        // Open the "Add Music" menu
-        AddMusicMenu addMusicMenu = new AddMusicMenu();
-        addMusicMenu.Owner = this; // Set the owner window
-        addMusicMenu.ShowDialog(); // Show the menu as a modal dialog
+      
+        AddMusicMenu addMusicMenu = new AddMusicMenu(_account);
+        addMusicMenu.Owner = this; 
+        addMusicMenu.ShowDialog(); 
     }
-
     
-    private async void kishlackButton_Click(object sender, RoutedEventArgs e)
+    private void DeleteMusicButton_Click(object sender, RoutedEventArgs e)
     {
-        await PlayMusicAsync("kishlack");
+        DeleteMusicWindow deleteMusicWindow = new DeleteMusicWindow(_account);
+        deleteMusicWindow.Owner = this;
+        deleteMusicWindow.ShowDialog();
     }
-
-    private async void cupsizeButton_Click(object sender, RoutedEventArgs e)
-    {
-        await PlayMusicAsync("virus");
-    }
-
     private async Task PlayMusicAsync(string trackName)
     {
         try

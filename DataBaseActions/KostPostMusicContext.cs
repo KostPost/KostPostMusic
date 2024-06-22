@@ -8,12 +8,10 @@ namespace DataBaseActions;
 public class KostPostMusicContext : DbContext
 {
     private static KostPostMusicContext _instance;
-    public DbSet<Album> Albums { get; set; }
 
 
     public DbSet<Account> Accounts { get; set; }
-    public DbSet<MusicFile> MusicFiles { get; set; }
-    public DbSet<MusicAuthor> MusicAuthors { get; set; }
+    public DbSet<MusicData> MusicFiles { get; set; }
 
     public KostPostMusicContext(DbContextOptions<KostPostMusicContext> options)
         : base(options)
@@ -41,98 +39,54 @@ public class KostPostMusicContext : DbContext
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
-{
-    modelBuilder.Entity<Album>(entity =>
     {
-        entity.ToTable("albums");
+        modelBuilder.Entity<MusicData>(entity =>
+        {
+            entity.ToTable("music_data");
 
-        entity.HasKey(e => e.Id);
+            entity.HasKey(e => e.Id);
 
-        entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.FileName)
+                .IsRequired()
+                .HasMaxLength(255);
 
-        entity.Property(e => e.Name)
-            .IsRequired()
-            .HasMaxLength(255)
-            .HasColumnName("name");
+            entity.Property(e => e.AuthorID)
+                .IsRequired();
 
-        entity.HasMany(e => e.MusicFiles)
-            .WithOne(e => e.Album)
-            .HasForeignKey(e => e.AlbumId)
-            .IsRequired();
-    });
+            entity.Property(e => e.PlayCount)
+                .HasDefaultValue(0);
 
-    modelBuilder.Entity<MusicFile>(entity =>
-    {
-        entity.ToTable("music_files");
+            entity.Property(e => e.AuthorName)
+                .IsRequired()
+                .HasMaxLength(255);
 
-        entity.HasKey(e => e.Id);
-
-        entity.Property(e => e.Id).HasColumnName("id");
-
-        entity.Property(e => e.FileName)
-            .IsRequired()
-            .HasMaxLength(255)
-            .HasColumnName("file_name");
-
-        entity.Property(e => e.AlbumId)
-            .IsRequired()
-            .HasColumnName("album_id");
-
-        entity.HasMany(e => e.Authors)
-            .WithMany(e => e.MusicFiles)
-            .UsingEntity<Dictionary<string, object>>(
-                "music_file_authors",
-                j => j.HasOne<MusicAuthor>()
-                    .WithMany(a => a.MusicFiles)
-                    .HasForeignKey("music_author_id")
-                    .HasConstraintName("FK_music_file_authors_music_author_id")
-                    .OnDelete(DeleteBehavior.Cascade),
-                j => j.HasOne<MusicFile>()
-                    .WithMany(m => m.Authors)
-                    .HasForeignKey("music_file_id")
-                    .HasConstraintName("FK_music_file_authors_music_file_id")
-                    .OnDelete(DeleteBehavior.Cascade),
-                j =>
-                {
-                    j.HasKey("music_file_id", "music_author_id");
-                    j.ToTable("music_file_authors");
-                }
-            );
-    });
-
-    modelBuilder.Entity<MusicAuthor>(entity =>
-    {
-        entity.ToTable("music_authors");
-
-        entity.HasKey(e => e.Id);
-
-        entity.Property(e => e.Id).HasColumnName("id");
-
-        entity.Property(e => e.Name)
-            .IsRequired()
-            .HasMaxLength(255)
-            .HasColumnName("name");
-
-        entity.HasMany(e => e.MusicFiles)
-            .WithMany(e => e.Authors)
-            .UsingEntity<Dictionary<string, object>>(
-                "music_file_authors",
-                j => j.HasOne<MusicAuthor>()
-                    .WithMany(a => a.MusicFiles)
-                    .HasForeignKey("music_author_id")
-                    .HasConstraintName("FK_music_file_authors_music_author_id")
-                    .OnDelete(DeleteBehavior.Cascade),
-                j => j.HasOne<MusicFile>()
-                    .WithMany(m => m.Authors)
-                    .HasForeignKey("music_file_id")
-                    .HasConstraintName("FK_music_file_authors_music_file_id")
-                    .OnDelete(DeleteBehavior.Cascade),
-                j =>
-                {
-                    j.HasKey("music_file_id", "music_author_id");
-                    j.ToTable("music_file_authors");
-                }
-            );
-    });
-}
+            // If AuthorID is a foreign key to the Accounts table
+            entity.HasOne<Account>()
+                .WithMany()
+                .HasForeignKey(m => m.AuthorID);
+        });
+    }
+    // protected override void OnModelCreating(ModelBuilder modelBuilder)
+    // {
+    //     modelBuilder.Entity<MusicData>(entity =>
+    //     {
+    //         entity.ToTable("music_data");
+    //
+    //         entity.HasKey(e => e.Id);
+    //
+    //         entity.Property(e => e.FileName)
+    //             .IsRequired()
+    //             .HasMaxLength(255);
+    //
+    //         entity.Property(e => e.AuthorID)
+    //             .IsRequired();
+    //
+    //         entity.Property(e => e.PlayCount)
+    //             .HasDefaultValue(0);
+    //
+    //         entity.Property(e => e.AuthorName)
+    //             .IsRequired()
+    //             .HasMaxLength(255);
+    //     });
+    // }
 }

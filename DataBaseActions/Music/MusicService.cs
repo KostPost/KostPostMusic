@@ -1,4 +1,5 @@
-﻿using ClassesData.Music;
+﻿using ClassesData;
+using ClassesData.Music;
 using Microsoft.EntityFrameworkCore;
 using MusicAPI;
 
@@ -8,7 +9,6 @@ public class MusicService
 {
     private readonly KostPostMusicContext _dbContext;
     private readonly AzureBlobs _azureBlobs;
-    private readonly Album _album;
 
     public MusicService(KostPostMusicContext dbContext, AzureBlobs azureBlobs)
     {
@@ -16,71 +16,78 @@ public class MusicService
         _azureBlobs = azureBlobs;
     }
 
-    public async Task AddAlbumAsync(string musicName, string albumName, string authors, IEnumerable<string> filePaths)
+
+    public async Task<(bool Success, string Message)> AddMusicFileAsync(string musicName, string filePath,
+        Account account)
     {
-        var album = new Album
+        bool azureSuccess = false;
+        bool sqlSuccess = false;
+
+        
+        if (_dbContext.MusicFiles.Any(m => m.FileName == musicName))
         {
-            Name = albumName
-        };
-
-        _dbContext.Albums.Add(album);
-        _dbContext.SaveChangesAsync();
-
-        var authorList = ParseAuthors(authors);
-
-        foreach (var filePath in filePaths)
+            return (false, $"A music file with the name '{musicName}' already exists.");
+        }
+        
+        try
         {
-            var fileName = Path.GetFileName(filePath);
-            _azureBlobs.UploadBlobAsync(filePath, fileName);
+            await _azureBlobs.UploadBlobAsync(filePath, musicName);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Azure Error: {ex.Message}");
+            return (false, "Failed to upload file to Azure storage.");
+        }
+        
+        azureSuccess = true;
 
-            var music = new MusicFile
+        if (azureSuccess)
+        {
+            using var transaction = await _dbContext.Database.BeginTransactionAsync();
+            try
             {
-                FileName = fileName,
-                AlbumId = album.Id,
-                Authors = authorList
-            };
+                var music = new MusicData
+                {
+                    FileName = musicName,
+                    AuthorName = account.Username,
+                    AuthorID = account.Id
+                };
 
-            _dbContext.MusicFiles.Add(music);
+                _dbContext.MusicFiles.Add(music);
+                await _dbContext.SaveChangesAsync();
+                await transaction.CommitAsync();
+                sqlSuccess = true;
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                Console.WriteLine($"PostgreSQL Error: {ex.Message}");
+                Console.WriteLine($"Inner Exception: {ex.InnerException?.Message}");
+                Console.WriteLine($"Stack Trace: {ex.StackTrace}");
+
+                // If SQL fails, try to delete the uploaded blob from Azure
+                try
+                {
+                    await _azureBlobs.DeleteBlobAsync(musicName);
+                }
+                catch (Exception deleteEx)
+                {
+                    Console.WriteLine($"Failed to delete Azure blob after SQL error: {deleteEx.Message}");
+                }
+
+                return (false,
+                    "Failed to save data to the database. The uploaded file has been removed from Azure storage.");
+            }
         }
 
-        await _dbContext.SaveChangesAsync();
-    }
-
-    public async Task AddMusicFileAsync(string musicName, string albumName, string authors, string filePath)
-    {
-        var album = _dbContext.Albums.FirstOrDefault(a => a.Name == albumName);
-        if (album == null)
+        if (azureSuccess && sqlSuccess)
         {
-            album = new Album { Name = albumName };
-            _dbContext.Albums.Add(album);
+            return (true, "Music file successfully added to both Azure storage and the database.");
         }
-
-        var authorList = ParseAuthors(authors);
-
-        var fileName = Path.GetFileName(filePath);
-        _azureBlobs.UploadBlobAsync(filePath, fileName);
-
-        var music = new MusicFile
+        else
         {
-            FileName = fileName,
-            AlbumId = album.Id,
-            Authors = authorList
-        };
-
-        _dbContext.MusicFiles.Add(music);
-        _dbContext.SaveChangesAsync();
-    }
-
-    private ICollection<MusicAuthor> ParseAuthors(string authors)
-    {
-        var authorList = new List<MusicAuthor>();
-        var authorNames = authors.Split(',');
-
-        foreach (var authorName in authorNames)
-        {
-            authorList.Add(new MusicAuthor { Name = authorName.Trim() });
+            return (false, "An unexpected error occurred.");
         }
-
-        return authorList;
+        
     }
 }

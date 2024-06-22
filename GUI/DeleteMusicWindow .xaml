@@ -1,0 +1,25 @@
+﻿<Window x:Class="KostPostMusic.DeleteMusicWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:KostPostMusic"
+        mc:Ignorable="d"
+        Title="Delete Music" Height="400" Width="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <ListBox x:Name="musicListBox" Grid.Row="0" Margin="10"/>
+        
+        <Button Content="Delete Selected" 
+                Grid.Row="1" 
+                VerticalAlignment="Bottom" 
+                HorizontalAlignment="Center"
+                Margin="10"
+                Padding="10,5"
+                Click="DeleteButton_Click"/>
+    </Grid>
+</Window>

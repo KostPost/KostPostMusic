@@ -1,8 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using Azure.Storage.Blobs;
 using ClassesData;
-using MusicAPI;
 
 namespace KostPostMusic;
 
@@ -28,9 +26,9 @@ public partial class AdminMainPage : Window
         private void AddMusicButton_Click(object sender, RoutedEventArgs e)
         {
             // Open the "Add Music" menu
-            AddMusicMenu addMusicMenu = new AddMusicMenu();
-            addMusicMenu.Owner = this; // Set the owner window
-            addMusicMenu.ShowDialog(); // Show the menu as a modal dialog
+            // AddMusicMenu addMusicMenu = new AddMusicMenu();
+            // addMusicMenu.Owner = this; // Set the owner window
+            // addMusicMenu.ShowDialog(); // Show the menu as a modal dialog
         }
         private void UsernameButton_Click(object sender, RoutedEventArgs e)
         {

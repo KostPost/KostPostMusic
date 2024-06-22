@@ -45,10 +45,11 @@ public partial class App : Application
                 string username = (string)key.GetValue("Username");
                 string password = (string)key.GetValue("Password");
                 string accountType = (string)key.GetValue("AccountType");
+                int id = (int)key.GetValue("Id");
                 key.Close();
 
-                Account account = new Account(username, password, accountType);
-
+                Account account = new Account(id,username, password, accountType);
+                //Account account = new Account(username, password, accountType);
                 return account;
             }
         }
@@ -75,15 +76,16 @@ public partial class App : Application
         return false;
     }
 
-    public static void SaveCredentials(string username, string password, string accountType)
+    public static void SaveCredentials(int id, string username, string password, string accountType)
     {
-        RegistryKey key = Registry.CurrentUser.CreateSubKey("SOFTWARE\\KostPostMusic");
-        key.SetValue("Username", username, RegistryValueKind.String);
-        key.SetValue("Password", password, RegistryValueKind.String);
-        key.SetValue("AccountType", accountType, RegistryValueKind.String);
-        key.Close();
+        using (RegistryKey key = Registry.CurrentUser.CreateSubKey("SOFTWARE\\KostPostMusic"))
+        {
+            key.SetValue("Username", username, RegistryValueKind.String);
+            key.SetValue("Password", password, RegistryValueKind.String);
+            key.SetValue("AccountType", accountType, RegistryValueKind.String);
+            key.SetValue("Id", id, RegistryValueKind.DWord);
+        }
     }
-
     public static void ClearCredentials()
     {
         RegistryKey key = Registry.CurrentUser.OpenSubKey("SOFTWARE\\KostPostMusic", true);
@@ -92,6 +94,7 @@ public partial class App : Application
             key.DeleteValue("Username");
             key.DeleteValue("Password");
             key.DeleteValue("AccountType");
+            key.DeleteValue("Id");
             key.Close();
         }
     }
