@@ -77,30 +77,41 @@
             <Button x:Name="UsernameButton" Style="{StaticResource UsernameButtonStyle}" Click="UsernameButton_Click" />
 
             <!-- Search input and results -->
-            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,20,0,0" Width="300">
-                <Grid>
-                    <TextBox x:Name="SearchInput" Style="{StaticResource SearchInputStyle}" Margin="0,0,0,10" TextChanged="SearchInput_TextChanged"/>
-                    <TextBlock IsHitTestVisible="False" Text="Search for music..." VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0" Foreground="DarkGray">
+            <Grid x:Name="ForegroundContent" Panel.ZIndex="1000" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,70,20,0" Width="200">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <TextBox x:Name="SearchInput" Style="{StaticResource SearchInputStyle}" Margin="0,0,0,10"
+                             TextChanged="SearchInput_TextChanged" />
+                    <TextBlock IsHitTestVisible="False" Text="Search for music..." VerticalAlignment="Center"
+                               HorizontalAlignment="Left" Margin="5,0,0,0" Foreground="DarkGray">
                         <TextBlock.Style>
                             <Style TargetType="{x:Type TextBlock}">
-                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Setter Property="Visibility" Value="Collapsed" />
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding Text, ElementName=SearchInput}" Value="">
-                                        <Setter Property="Visibility" Value="Visible"/>
+                                        <Setter Property="Visibility" Value="Visible" />
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
                         </TextBlock.Style>
                     </TextBlock>
                 </Grid>
-                <ListBox x:Name="SearchResults" Style="{StaticResource SearchResultsStyle}" Height="200" Visibility="Collapsed" SelectionChanged="SearchResults_SelectionChanged">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding DisplayName}"/>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-            </StackPanel>
+
+                <Border Grid.Row="1" Background="White" BorderBrush="Gray" BorderThickness="1" CornerRadius="5">
+                    <ListBox x:Name="SearchResults" Style="{StaticResource SearchResultsStyle}" Height="200"
+                             Visibility="Collapsed" SelectionChanged="SearchResults_SelectionChanged">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding DisplayName}" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Border>
+            </Grid>
             
             
 
@@ -141,7 +152,15 @@
         </ListBox>
 
         <!-- Add this in the center of the app, initially hidden -->
-        <ListBox x:Name="PlaylistSongsListBox" HorizontalAlignment="Center" VerticalAlignment="Center" Width="400" Height="400" Background="White" Foreground="Black" Visibility="Collapsed">
+        <ListBox x:Name="PlaylistSongsListBox" 
+                 HorizontalAlignment="Center" 
+                 VerticalAlignment="Top" 
+                 Margin="0,10,0,110" 
+                 Width="400" 
+                 Height="800" 
+                 Background="White" 
+                 Foreground="Black" 
+                 Visibility="Collapsed">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding DisplayName}"/>
