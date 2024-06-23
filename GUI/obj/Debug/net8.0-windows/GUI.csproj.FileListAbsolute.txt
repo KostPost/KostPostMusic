@@ -126,3 +126,11 @@ P:\KostPostMusic\GUI\obj\Debug\net8.0-windows\AddMusicMenu .baml
 P:\KostPostMusic\GUI\bin\Debug\net8.0-windows\System.IO.Pipelines.dll
 P:\KostPostMusic\GUI\obj\Debug\net8.0-windows\DeleteMusicWindow .g.cs
 P:\KostPostMusic\GUI\obj\Debug\net8.0-windows\DeleteMusicWindow .baml
+P:\KostPostMusic\GUI\obj\Debug\net8.0-windows\InputDialog .g.cs
+P:\KostPostMusic\GUI\obj\Debug\net8.0-windows\InputDialog .baml
+P:\KostPostMusic\GUI\bin\Debug\net8.0-windows\NodaTime.dll
+P:\KostPostMusic\GUI\bin\Debug\net8.0-windows\Npgsql.EntityFrameworkCore.PostgreSQL.NodaTime.dll
+P:\KostPostMusic\GUI\bin\Debug\net8.0-windows\Npgsql.NodaTime.dll
+P:\KostPostMusic\GUI\bin\Debug\net8.0-windows\Newtonsoft.Json.dll
+P:\KostPostMusic\GUI\bin\Debug\net8.0-windows\Newtonsoft.Json.Bson.dll
+P:\KostPostMusic\GUI\bin\Debug\net8.0-windows\Newtonsoft.Json.Schema.dll

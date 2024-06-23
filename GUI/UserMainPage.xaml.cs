@@ -22,9 +22,11 @@ public partial class UserMainPage : Window
     private bool isPlaying = false;
 
     private MusicData currentMusic;
-
+    private List<Playlist> userPlaylists;
     
-  
+
+
+
     public UserMainPage(Account account)
     {
         InitializeComponent();
@@ -33,34 +35,113 @@ public partial class UserMainPage : Window
 
         timer = new DispatcherTimer
         {
-            Interval = TimeSpan.FromMilliseconds(100) 
+            Interval = TimeSpan.FromMilliseconds(100)
         };
         timer.Tick += Timer_Tick;
 
         mediaPlayer.MediaOpened += MediaPlayer_MediaOpened;
 
         UpdateCurrentMusicDisplay();
+        
+        LoadUserPlaylists();
+
     }
+
+    
+    
+    private async void CreatePlaylistButton_Click(object sender, RoutedEventArgs e)
+    {
+        // Prompt the user for playlist name
+        var dialog = new InputDialog("Create Playlist", "Enter playlist name:");
+        if (dialog.ShowDialog() == true)
+        {
+            string playlistName = dialog.ResponseText;
+        
+            if (!string.IsNullOrWhiteSpace(playlistName))
+            {
+                // Create a new playlist
+                var newPlaylist = new Playlist
+                {
+                    Name = playlistName,
+                    Description = "",  // You can add a description input if needed
+                    CreatedBy = _account.Id
+                };
+
+                // Save the playlist to the database
+                using (var context = new KostPostMusicContext())
+                {
+                    context.Playlists.Add(newPlaylist);
+                    await context.SaveChangesAsync();
+                }
+
+                // Refresh the playlists list
+                await LoadUserPlaylists();
+            }
+        }
+    }
+    
+    private async Task LoadUserPlaylists()
+    {
+        using (var context = new KostPostMusicContext())
+        {
+            userPlaylists = await context.Playlists
+                .Where(p => p.CreatedBy == _account.Id)
+                .ToListAsync();
+        }
+
+        PlaylistsListBox.ItemsSource = userPlaylists;
+    }
+
+    private void PlaylistsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (PlaylistsListBox.SelectedItem is Playlist selectedPlaylist)
+        {
+            // Load and display the songs in the selected playlist
+            DisplayPlaylistSongs(selectedPlaylist);
+        }
+    }
+
+    private async void DisplayPlaylistSongs(Playlist playlist)
+    {
+        using (var context = new KostPostMusicContext())
+        {
+            var playlistSongs = await context.MusicFiles
+                .Where(m => playlist.SongIds.Contains(m.Id))
+                .Select(m => new SearchResult
+                {
+                    Id = m.Id,
+                    DisplayName = $"{m.AuthorName} - {System.IO.Path.GetFileNameWithoutExtension(m.FileName)}",
+                    FileName = m.FileName
+                })
+                .ToListAsync();
+
+            PlaylistSongsListBox.ItemsSource = playlistSongs;
+            PlaylistSongsListBox.Visibility = Visibility.Visible;
+        }
+    }
+    
+
+    
 
     private void AddMusicButton_Click(object sender, RoutedEventArgs e)
     {
-      
         AddMusicMenu addMusicMenu = new AddMusicMenu(_account);
-        addMusicMenu.Owner = this; 
-        addMusicMenu.ShowDialog(); 
+        addMusicMenu.Owner = this;
+        addMusicMenu.ShowDialog();
     }
-    
+
     private void DeleteMusicButton_Click(object sender, RoutedEventArgs e)
     {
         DeleteMusicWindow deleteMusicWindow = new DeleteMusicWindow(_account);
         deleteMusicWindow.Owner = this;
         deleteMusicWindow.ShowDialog();
     }
-    
+
     private ListBox GetSearchResultsListBox()
     {
         return this.FindName("SearchResults") as ListBox;
     }
+
     private async void SearchInput_TextChanged(object sender, TextChangedEventArgs e)
     {
         string searchTerm = SearchInput.Text.Trim().ToLower();
@@ -74,11 +155,11 @@ public partial class UserMainPage : Window
         {
             var results = await context.MusicFiles
                 .Where(m => m.FileName.ToLower().Contains(searchTerm) || m.AuthorName.ToLower().Contains(searchTerm))
-                .Select(m => new SearchResult 
-                { 
-                    Id = m.Id, 
-                    DisplayName = $"{m.AuthorName} - {System.IO.Path.GetFileNameWithoutExtension(m.FileName)}", 
-                    FileName = m.FileName 
+                .Select(m => new SearchResult
+                {
+                    Id = m.Id,
+                    DisplayName = $"{m.AuthorName} - {System.IO.Path.GetFileNameWithoutExtension(m.FileName)}",
+                    FileName = m.FileName
                 })
                 .ToListAsync();
 
@@ -97,6 +178,7 @@ public partial class UserMainPage : Window
             SearchResults.Visibility = Visibility.Collapsed;
         }
     }
+
     private async Task PlayMusicAsync(string trackName)
     {
         try
@@ -118,6 +200,7 @@ public partial class UserMainPage : Window
             {
                 currentMusic = await context.MusicFiles.FirstOrDefaultAsync(m => m.FileName == trackName);
             }
+
             UpdateCurrentMusicDisplay();
         }
         catch (Exception ex)
@@ -125,7 +208,7 @@ public partial class UserMainPage : Window
             MessageBox.Show($"Failed to play music: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
-    
+
     private void PlayPauseButton_Click(object sender, RoutedEventArgs e)
     {
         TogglePlayPause();
@@ -149,10 +232,12 @@ public partial class UserMainPage : Window
             }
             else
             {
-                MessageBox.Show("No music selected. Please choose a track to play.", "No Music", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("No music selected. Please choose a track to play.", "No Music", MessageBoxButton.OK,
+                    MessageBoxImage.Information);
                 return;
             }
         }
+
         isPlaying = !isPlaying;
     }
 
@@ -170,9 +255,11 @@ public partial class UserMainPage : Window
             {
                 MusicSlider.Value = mediaPlayer.Position.TotalSeconds;
             }
+
             UpdateTimeDisplay();
         }
     }
+
     private void MediaPlayer_MediaOpened(object sender, EventArgs e)
     {
         if (mediaPlayer.NaturalDuration.HasTimeSpan)
@@ -182,6 +269,7 @@ public partial class UserMainPage : Window
             MusicSlider.SmallChange = 1;
             MusicSlider.LargeChange = Math.Min(10, mediaPlayer.NaturalDuration.TimeSpan.TotalSeconds / 10);
         }
+
         UpdateTimeDisplay();
     }
 
@@ -199,7 +287,6 @@ public partial class UserMainPage : Window
     //     }
     // }
 
-    
 
     private bool isDraggingSlider = false;
 
@@ -220,9 +307,10 @@ public partial class UserMainPage : Window
         {
             mediaPlayer.Position = TimeSpan.FromSeconds(e.NewValue);
         }
+
         UpdateTimeDisplay();
     }
-    
+
     private void UpdateTimeDisplay()
     {
         if (mediaPlayer.Source != null && mediaPlayer.NaturalDuration.HasTimeSpan)
@@ -284,12 +372,13 @@ public partial class UserMainPage : Window
             }
         }
     }
-    
+
     private void UpdateCurrentMusicDisplay()
     {
         if (currentMusic != null)
         {
-            CurrentMusicTextBlock.Text = $"Now Playing: {currentMusic.AuthorName} - {System.IO.Path.GetFileNameWithoutExtension(currentMusic.FileName)}";
+            CurrentMusicTextBlock.Text =
+                $"Now Playing: {currentMusic.AuthorName} - {System.IO.Path.GetFileNameWithoutExtension(currentMusic.FileName)}";
         }
         else
         {

@@ -10,3 +10,4 @@ P:\KostPostMusic\ClassesData\obj\Debug\net8.0\refint\ClassesData.dll
 P:\KostPostMusic\ClassesData\obj\Debug\net8.0\ClassesData.pdb
 P:\KostPostMusic\ClassesData\obj\Debug\net8.0\ref\ClassesData.dll
 P:\KostPostMusic\ClassesData\obj\Debug\net8.0\ClassesData.sourcelink.json
+P:\KostPostMusic\ClassesData\obj\Debug\net8.0\ClassesData.csproj.AssemblyReference.cache

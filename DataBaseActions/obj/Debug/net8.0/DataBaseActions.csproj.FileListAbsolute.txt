@@ -16,3 +16,4 @@ P:\KostPostMusic\DataBaseActions\obj\Debug\net8.0\ref\DataBaseActions.dll
 P:\KostPostMusic\DataBaseActions\bin\Debug\net8.0\DataBaseActions.runtimeconfig.json
 P:\KostPostMusic\DataBaseActions\obj\Debug\net8.0\DataBaseActions.genruntimeconfig.cache
 P:\KostPostMusic\DataBaseActions\obj\Debug\net8.0\DataBaseActions.sourcelink.json
+P:\KostPostMusic\DataBaseActions\obj\Debug\net8.0\EFCoreNpgsqlNodaTime.cs

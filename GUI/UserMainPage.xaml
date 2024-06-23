@@ -128,5 +128,27 @@
                        Foreground="White" 
                        FontSize="14"/>
         </Grid>
+        
+        <Button x:Name="CreatePlaylistButton" Style="{StaticResource ButtonStyle}" Content="Create Playlist" Click="CreatePlaylistButton_Click" Margin="10,250,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+
+        <!-- Add this after the CreatePlaylistButton -->
+        <ListBox x:Name="PlaylistsListBox" Margin="10,310,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Height="200" Background="White" Foreground="Black" SelectionChanged="PlaylistsListBox_SelectionChanged">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <!-- Add this in the center of the app, initially hidden -->
+        <ListBox x:Name="PlaylistSongsListBox" HorizontalAlignment="Center" VerticalAlignment="Center" Width="400" Height="400" Background="White" Foreground="Black" Visibility="Collapsed">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding DisplayName}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        
     </Grid>
 </Window>

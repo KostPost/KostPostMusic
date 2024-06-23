@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "kZ0sCKmd1lvHn7VrD+RyQkjTV7KktJ5Ib40XZB1B/ZA3g5eaIwiMbI8MGuMG0cKfsra0HIz59Ghv3Jk1c+OAQA==",
+  "dgSpecHash": "nnYeRW0WnKqubxCXig6lnN5eOvFG1lslOpbbfq2Aj6JnPeIP6peWzY1CD5YYlhp4zMU65niEOeKfqlvYdnD3hg==",
   "success": true,
   "projectFilePath": "P:\\KostPostMusic\\ClassesData\\ClassesData.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\KostPost\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
+    "C:\\Users\\KostPost\\.nuget\\packages\\newtonsoft.json.bson\\1.0.3-beta1\\newtonsoft.json.bson.1.0.3-beta1.nupkg.sha512",
+    "C:\\Users\\KostPost\\.nuget\\packages\\newtonsoft.json.schema\\4.0.1\\newtonsoft.json.schema.4.0.1.nupkg.sha512"
+  ],
   "logs": []
 }

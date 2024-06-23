@@ -1,20 +1,38 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System.Text.Json.Serialization;
+
 
 namespace ClassesData.Music
 {
     [Table("playlists")]
     public class Playlist
     {
-        [Column("id")] [Key] public int Id { get; set; }
+        [JsonPropertyName("id")]
+        [Key]
+        public int Id { get; set; }
 
-        [Required] [StringLength(255)] [Column("name")] public string Name { get; set; }
+        [JsonPropertyName("name")]
+        public string Name { get; set; }
 
-        [Required] [Column("owner_id")] public int OwnerId { get; set; }
+        [JsonPropertyName("description")]
+        public string Description { get; set; }
 
-        [Column("description")] public string Description { get; set; }
+        [JsonPropertyName("songIds")]
+        public List<int> SongIds { get; set; } = new List<int>();
 
-        public virtual ICollection<MusicData> Songs { get; set; } = new List<MusicData>();
+        [JsonPropertyName("createdAt")]
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+        [JsonPropertyName("updatedAt")]
+        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+
+        [JsonPropertyName("createdBy")]
+        public int CreatedBy { get; set; }
     }
 }

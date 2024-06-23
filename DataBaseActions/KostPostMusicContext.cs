@@ -1,7 +1,9 @@
-﻿using ClassesData;
+﻿using System.Text.Json;
+using ClassesData;
 using ClassesData.Music;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 
 namespace DataBaseActions;
 
@@ -12,6 +14,9 @@ public class KostPostMusicContext : DbContext
 
     public DbSet<Account> Accounts { get; set; }
     public DbSet<MusicData> MusicFiles { get; set; }
+
+    public DbSet<Playlist> Playlists { get; set; }
+
 
     public KostPostMusicContext(DbContextOptions<KostPostMusicContext> options)
         : base(options)
@@ -30,11 +35,22 @@ public class KostPostMusicContext : DbContext
             .Options;
     }
 
+    // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    // {
+    //     if (!optionsBuilder.IsConfigured)
+    //     {
+    //         optionsBuilder.UseNpgsql("Host=localhost;Database=KostPostMusic;Username=postgres;Password=2025");
+    //         options => options.UseNodaTime());
+    //
+    //     }
+    // }
+    
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (!optionsBuilder.IsConfigured)
         {
-            optionsBuilder.UseNpgsql("Host=localhost;Database=KostPostMusic;Username=postgres;Password=2025");
+            optionsBuilder.UseNpgsql("Host=localhost;Database=KostPostMusic;Username=postgres;Password=2025", 
+                options => options.UseNodaTime());
         }
     }
 
@@ -71,37 +87,45 @@ public class KostPostMusicContext : DbContext
 
             entity.HasKey(e => e.Id);
 
-            entity.Property(e => e.Name)
+            entity.Property(e => e.Id)
+                .HasColumnName("id")
                 .IsRequired()
-                .HasMaxLength(255);
+                .ValueGeneratedOnAdd();
 
-            entity.Property(e => e.OwnerId)
+            entity.Property(e => e.Name)
+                .HasColumnName("name")
+                .HasColumnType("text")
                 .IsRequired();
 
             entity.Property(e => e.Description)
-                .HasMaxLength(1000);
+                .HasColumnName("description")
+                .HasColumnType("text");
 
-            entity.HasOne<Account>()
-                .WithMany()
-                .HasForeignKey(p => p.OwnerId);
+          
+            entity.Property(e => e.SongIds)
+                .HasColumnName("song_ids")
+                .HasColumnType("jsonb")
+                .HasConversion(
+                    v => JsonConvert.SerializeObject(v),
+                    v => JsonConvert.DeserializeObject<List<int>>(v))
+                .IsRequired();
 
-            entity.HasMany(p => p.Songs)
-                .WithMany()
-                .UsingEntity<Dictionary<string, object>>(
-                    "PlaylistSongs",
-                    j => j
-                        .HasOne<MusicData>()
-                        .WithMany()
-                        .HasForeignKey("SongId"),
-                    j => j
-                        .HasOne<Playlist>()
-                        .WithMany()
-                        .HasForeignKey("PlaylistId"),
-                    j =>
-                    {
-                        j.HasKey("PlaylistId", "SongId");
-                        j.ToTable("playlist_songs");
-                    });
+            entity.Property(e => e.CreatedAt)
+                .HasColumnName("created_at")
+                .HasColumnType("timestamp with time zone")
+                .IsRequired()
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+            entity.Property(e => e.UpdatedAt)
+                .HasColumnName("updated_at")
+                .HasColumnType("timestamp with time zone")
+                .IsRequired()
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+            entity.Property(e => e.CreatedBy)
+                .HasColumnName("created_by")
+                .HasColumnType("integer")
+                .IsRequired();
         });
     }
 }
