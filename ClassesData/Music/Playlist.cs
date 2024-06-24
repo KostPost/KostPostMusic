@@ -13,26 +13,18 @@ namespace ClassesData.Music
     [Table("playlists")]
     public class Playlist
     {
-        [JsonPropertyName("id")]
-        [Key]
-        public int Id { get; set; }
+        [JsonPropertyName("id")] [Key] public int Id { get; set; }
 
-        [JsonPropertyName("name")]
-        public string Name { get; set; }
+        [JsonPropertyName("name")] public string Name { get; set; }
 
-        [JsonPropertyName("description")]
-        public string Description { get; set; }
+      //   [JsonPropertyName("description")] public string Description { get; set; }
 
-        [JsonPropertyName("songIds")]
-        public List<int> SongIds { get; set; } = new List<int>();
+        [JsonPropertyName("songIds")] public List<int> SongIds { get; set; } = new List<int>();
 
-        [JsonPropertyName("createdAt")]
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        // [JsonPropertyName("createdAt")] public DateTime CreatedAt { get; set; } = DateTime.Now;
+        //
+        // [JsonPropertyName("updatedAt")] public DateTime UpdatedAt { get; set; } = DateTime.Now;
 
-        [JsonPropertyName("updatedAt")]
-        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
-
-        [JsonPropertyName("createdBy")]
-        public int CreatedBy { get; set; }
+        [JsonPropertyName("createdBy")] public int CreatedBy { get; set; }
     }
 }

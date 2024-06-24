@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.IO;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
@@ -23,8 +24,6 @@ public partial class UserMainPage : Window
 
     private MusicData currentMusic;
     private List<Playlist> userPlaylists;
-    
-
 
 
     public UserMainPage(Account account)
@@ -42,45 +41,71 @@ public partial class UserMainPage : Window
         mediaPlayer.MediaOpened += MediaPlayer_MediaOpened;
 
         UpdateCurrentMusicDisplay();
-        
-        LoadUserPlaylists();
 
+        LoadUserPlaylists();
     }
 
-    
+
+    // private async void CreatePlaylistButton_Click(object sender, RoutedEventArgs e)
+    // {
+    //     // Prompt the user for playlist name
+    //     var dialog = new InputDialog("Create Playlist", "Enter playlist name:");
+    //     if (dialog.ShowDialog() == true)
+    //     {
+    //         string playlistName = dialog.ResponseText;
+    //
+    //         if (!string.IsNullOrWhiteSpace(playlistName))
+    //         {
+    //             // Create a new playlist
+    //             var newPlaylist = new Playlist
+    //             {
+    //                 Name = playlistName,
+    //                 Description = "", // You can add a description input if needed
+    //                 CreatedBy = _account.Id
+    //             };
+    //
+    //             // Save the playlist to the database
+    //             using (var context = new KostPostMusicContext())
+    //             {
+    //                 context.Playlists.Add(newPlaylist);
+    //                 await context.SaveChangesAsync();
+    //             }
+    //
+    //             // Refresh the playlists list
+    //             await LoadUserPlaylists();
+    //         }
+    //     }
+    // }
+
     
     private async void CreatePlaylistButton_Click(object sender, RoutedEventArgs e)
     {
-        // Prompt the user for playlist name
         var dialog = new InputDialog("Create Playlist", "Enter playlist name:");
         if (dialog.ShowDialog() == true)
         {
             string playlistName = dialog.ResponseText;
-        
+
             if (!string.IsNullOrWhiteSpace(playlistName))
             {
-                // Create a new playlist
                 var newPlaylist = new Playlist
                 {
                     Name = playlistName,
-                    Description = "",  // You can add a description input if needed
-                    CreatedBy = _account.Id
+                    CreatedBy = _account.Id,
+           
                 };
 
-                // Save the playlist to the database
                 using (var context = new KostPostMusicContext())
                 {
                     context.Playlists.Add(newPlaylist);
                     await context.SaveChangesAsync();
                 }
 
-                // Refresh the playlists list
                 await LoadUserPlaylists();
             }
         }
     }
-    
-    private async Task LoadUserPlaylists()
+
+    public async Task LoadUserPlaylists()
     {
         using (var context = new KostPostMusicContext())
         {
@@ -89,7 +114,102 @@ public partial class UserMainPage : Window
                 .ToListAsync();
         }
 
+        PlaylistsListBox.ItemsSource = null; // Clear the current items
         PlaylistsListBox.ItemsSource = userPlaylists;
+    }
+    private void AddToPlaylist_Click(object sender, RoutedEventArgs e)
+    {
+        var menuItem = sender as MenuItem;
+        var contextMenu = menuItem.Parent as ContextMenu;
+        var textBlock = contextMenu.PlacementTarget as TextBlock;
+        var selectedTrack = textBlock.DataContext as SearchResult;
+
+        if (selectedTrack != null)
+        {
+            ShowAddToPlaylistDialog(selectedTrack);
+        }
+    }
+    private void TrackOptionsButton_Click(object sender, RoutedEventArgs e)
+    {
+        var button = sender as Button;
+        var track = button.DataContext as SearchResult;
+
+        ContextMenu contextMenu = new ContextMenu();
+        MenuItem addToPlaylistItem = new MenuItem { Header = "Add to Playlist" };
+        addToPlaylistItem.Click += (s, args) => ShowAddToPlaylistDialog(track);
+        contextMenu.Items.Add(addToPlaylistItem);
+
+        // You can add more menu items here for other actions
+
+        contextMenu.PlacementTarget = button;
+        contextMenu.IsOpen = true;
+    }
+    private void ShowAddToPlaylistDialog(SearchResult track)
+    {
+        var dialog = new AddToPlaylistDialog(userPlaylists);
+        if (dialog.ShowDialog() == true)
+        {
+            var selectedPlaylist = dialog.SelectedPlaylist;
+            if (selectedPlaylist != null)
+            {
+                AddTrackToPlaylist(selectedPlaylist, track);
+            }
+        }
+    }
+    private async void AddTrackToPlaylist(Playlist playlist, SearchResult track)
+    {
+        using (var context = new KostPostMusicContext())
+        {
+            var dbPlaylist = await context.Playlists.FindAsync(playlist.Id);
+            if (dbPlaylist != null)
+            {
+                if (!dbPlaylist.SongIds.Contains(track.Id))
+                {
+                    dbPlaylist.SongIds.Add(track.Id);
+                
+                    context.Entry(dbPlaylist).State = EntityState.Modified;
+
+                    try
+                    {
+                        await context.SaveChangesAsync();
+                        MessageBox.Show($"Added '{track.DisplayName}' to playlist '{playlist.Name}'", "Success",
+                            MessageBoxButton.OK, MessageBoxImage.Information);
+
+                        if (PlaylistsListBox.SelectedItem is Playlist selectedPlaylist &&
+                            selectedPlaylist.Id == playlist.Id)
+                        {
+                            await DisplayPlaylistSongs(selectedPlaylist);
+                        }
+
+                        await LoadUserPlaylists();
+                    }
+                    catch (Exception ex)
+                    {
+                        var innerException = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+                        MessageBox.Show($"Error: {innerException}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("This track is already in the playlist.", "Information", MessageBoxButton.OK,
+                        MessageBoxImage.Information);
+                }
+            }
+        }
+    }
+
+
+
+
+
+    private void SearchResults_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+    {
+        var listBoxItem = VisualTreeHelper.GetParent(e.OriginalSource as DependencyObject) as ListBoxItem;
+        if (listBoxItem != null)
+        {
+            listBoxItem.IsSelected = true;
+            e.Handled = true;
+        }
     }
 
     private void PlaylistsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -101,7 +221,8 @@ public partial class UserMainPage : Window
         }
     }
 
-    private async void DisplayPlaylistSongs(Playlist playlist)
+
+    private async Task DisplayPlaylistSongs(Playlist playlist)
     {
         using (var context = new KostPostMusicContext())
         {
@@ -110,7 +231,7 @@ public partial class UserMainPage : Window
                 .Select(m => new SearchResult
                 {
                     Id = m.Id,
-                    DisplayName = $"{m.AuthorName} - {System.IO.Path.GetFileNameWithoutExtension(m.FileName)}",
+                    DisplayName = $"{m.AuthorName} - {Path.GetFileNameWithoutExtension(m.FileName)}",
                     FileName = m.FileName
                 })
                 .ToListAsync();
@@ -119,9 +240,7 @@ public partial class UserMainPage : Window
             PlaylistSongsListBox.Visibility = Visibility.Visible;
         }
     }
-    
 
-    
 
     private void AddMusicButton_Click(object sender, RoutedEventArgs e)
     {

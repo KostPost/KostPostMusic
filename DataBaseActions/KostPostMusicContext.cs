@@ -3,6 +3,7 @@ using ClassesData;
 using ClassesData.Music;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
 namespace DataBaseActions;
@@ -44,15 +45,32 @@ public class KostPostMusicContext : DbContext
     //
     //     }
     // }
+
+    // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    // {
+    //     if (!optionsBuilder.IsConfigured)
+    //     {
+    //         optionsBuilder.UseNpgsql("Host=localhost;Database=KostPostMusic;Username=postgres;Password=2025",
+    //             options => options.UseNodaTime());
+    //     }
+    // }
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (!optionsBuilder.IsConfigured)
         {
-            optionsBuilder.UseNpgsql("Host=localhost;Database=KostPostMusic;Username=postgres;Password=2025", 
-                options => options.UseNodaTime());
-        }
+            optionsBuilder.UseNpgsql("Host=localhost;Database=KostPostMusic;Username=postgres;Password=2025",
+                    options => options.UseNodaTime())
+                .LogTo(Console.WriteLine, new[] { DbLoggerCategory.Database.Command.Name }, LogLevel.Information)
+                .EnableSensitiveDataLogging();
+            
+            
+            // Enable legacy timestamp behavior
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
+        }   
     }
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -80,28 +98,30 @@ public class KostPostMusicContext : DbContext
                 .WithMany()
                 .HasForeignKey(m => m.AuthorID);
         });
-
+        
+ 
         modelBuilder.Entity<Playlist>(entity =>
         {
+            
             entity.ToTable("playlists");
-
+        
             entity.HasKey(e => e.Id);
-
+        
             entity.Property(e => e.Id)
                 .HasColumnName("id")
                 .IsRequired()
                 .ValueGeneratedOnAdd();
-
+        
             entity.Property(e => e.Name)
                 .HasColumnName("name")
                 .HasColumnType("text")
                 .IsRequired();
-
-            entity.Property(e => e.Description)
-                .HasColumnName("description")
-                .HasColumnType("text");
-
-          
+        
+            // entity.Property(e => e.Description)
+            //     .HasColumnName("description")
+            //     .HasColumnType("text");
+        
+        
             entity.Property(e => e.SongIds)
                 .HasColumnName("song_ids")
                 .HasColumnType("jsonb")
@@ -110,18 +130,27 @@ public class KostPostMusicContext : DbContext
                     v => JsonConvert.DeserializeObject<List<int>>(v))
                 .IsRequired();
 
-            entity.Property(e => e.CreatedAt)
-                .HasColumnName("created_at")
-                .HasColumnType("timestamp with time zone")
-                .IsRequired()
-                .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-            entity.Property(e => e.UpdatedAt)
-                .HasColumnName("updated_at")
-                .HasColumnType("timestamp with time zone")
-                .IsRequired()
-                .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
+        
+            // entity.Property(e => e.CreatedAt)
+            //     .HasColumnName("created_at")
+            //     .HasColumnType("timestamp with time zone")
+            //     .IsRequired()
+            //     .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            //
+            // entity.Property(e => e.UpdatedAt)
+            //     .HasColumnName("updated_at")
+            //     .HasColumnType("timestamp with time zone")
+            //     .IsRequired()
+            //     .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            
+            // entity.Property(e => e.CreatedAt)
+            //     .HasColumnName("created_at")
+            //     .HasColumnType("timestamp with time zone");
+            //
+            // entity.Property(e => e.UpdatedAt)
+            //     .HasColumnName("updated_at")
+            //     .HasColumnType("timestamp with time zone");
+        
             entity.Property(e => e.CreatedBy)
                 .HasColumnName("created_by")
                 .HasColumnType("integer")

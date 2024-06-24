@@ -3,7 +3,7 @@
   <database-model serializer="dbm" dbms="POSTGRES" family-id="POSTGRES" format-version="4.51">
     <root id="1">
       <DateStyle>mdy</DateStyle>
-      <IntrospectionStateNumber>1321</IntrospectionStateNumber>
+      <IntrospectionStateNumber>1354</IntrospectionStateNumber>
       <ServerVersion>16.2</ServerVersion>
       <StartupTime>1718574604</StartupTime>
       <TimeZones>true ACDT
@@ -804,7 +804,7 @@ false Zulu
 14643||10|C|G
 14643||-9223372036854775808|U|G
 14643||10|U|G</Grants>
-      <IntrospectionStateNumber>1321</IntrospectionStateNumber>
+      <IntrospectionStateNumber>1354</IntrospectionStateNumber>
       <ObjectId>16885</ObjectId>
       <OwnerName>postgres</OwnerName>
     </database>
@@ -4236,8 +4236,8 @@ false Zulu
     <schema id="267" parent="3" name="public">
       <Comment>standard public schema</Comment>
       <Current>1</Current>
-      <IntrospectionStateNumber>1321</IntrospectionStateNumber>
-      <LastIntrospectionLocalTimestamp>2024-06-23.19:08:34</LastIntrospectionLocalTimestamp>
+      <IntrospectionStateNumber>1354</IntrospectionStateNumber>
+      <LastIntrospectionLocalTimestamp>2024-06-24.16:21:14</LastIntrospectionLocalTimestamp>
       <ObjectId>2200</ObjectId>
       <StateNumber>524</StateNumber>
       <OwnerName>pg_database_owner</OwnerName>
@@ -4260,10 +4260,10 @@ false Zulu
     </sequence>
     <sequence id="270" parent="267" name="playlists_id_seq">
       <DasType>integer|0s</DasType>
-      <ObjectId>17357</ObjectId>
+      <ObjectId>17381</ObjectId>
       <SequenceIdentity>1</SequenceIdentity>
       <StartValue>1</StartValue>
-      <StateNumber>1319</StateNumber>
+      <StateNumber>1353</StateNumber>
       <OwnerName>postgres</OwnerName>
     </sequence>
     <table id="271" parent="267" name="accounts">
@@ -4279,8 +4279,8 @@ false Zulu
       <OwnerName>postgres</OwnerName>
     </table>
     <table id="273" parent="267" name="playlists">
-      <ObjectId>17358</ObjectId>
-      <StateNumber>1319</StateNumber>
+      <ObjectId>17382</ObjectId>
+      <StateNumber>1353</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
@@ -4394,74 +4394,47 @@ false Zulu
       <DefaultExpression>nextval(&apos;playlists_id_seq&apos;::regclass)</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <StateNumber>1319</StateNumber>
-      <SequenceId>17357</SequenceId>
+      <StateNumber>1353</StateNumber>
+      <SequenceId>17381</SequenceId>
       <TypeId>23</TypeId>
     </column>
     <column id="289" parent="273" name="name">
-      <DasType>text|0s</DasType>
+      <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
-      <StateNumber>1319</StateNumber>
-      <TypeId>25</TypeId>
+      <StateNumber>1353</StateNumber>
+      <TypeId>1043</TypeId>
     </column>
-    <column id="290" parent="273" name="description">
-      <DasType>text|0s</DasType>
-      <Position>3</Position>
-      <StateNumber>1319</StateNumber>
-      <TypeId>25</TypeId>
-    </column>
-    <column id="291" parent="273" name="song_ids">
+    <column id="290" parent="273" name="song_ids">
       <DasType>jsonb|0s</DasType>
+      <DefaultExpression>&apos;[]&apos;::jsonb</DefaultExpression>
       <NotNull>1</NotNull>
-      <Position>4</Position>
-      <StateNumber>1319</StateNumber>
+      <Position>3</Position>
+      <StateNumber>1353</StateNumber>
       <TypeId>3802</TypeId>
     </column>
-    <column id="292" parent="273" name="created_at">
-      <DasType>timestamp|0s</DasType>
-      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>5</Position>
-      <StateNumber>1319</StateNumber>
-      <TypeId>1114</TypeId>
-    </column>
-    <column id="293" parent="273" name="updated_at">
-      <DasType>timestamp|0s</DasType>
-      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>6</Position>
-      <StateNumber>1319</StateNumber>
-      <TypeId>1114</TypeId>
-    </column>
-    <column id="294" parent="273" name="created_by">
+    <column id="291" parent="273" name="created_by">
       <DasType>integer|0s</DasType>
       <NotNull>1</NotNull>
-      <Position>7</Position>
-      <StateNumber>1319</StateNumber>
+      <Position>4</Position>
+      <StateNumber>1353</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <index id="295" parent="273" name="playlists_pkey">
+    <index id="292" parent="273" name="playlists_pkey">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>17366</ObjectId>
+      <ObjectId>17389</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>1319</StateNumber>
+      <StateNumber>1353</StateNumber>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <index id="296" parent="273" name="idx_playlists_song_ids">
-      <ColNames>song_ids</ColNames>
-      <ObjectId>17368</ObjectId>
-      <StateNumber>1320</StateNumber>
-      <AccessMethodId>2742</AccessMethodId>
-    </index>
-    <key id="297" parent="273" name="playlists_pkey">
+    <key id="293" parent="273" name="playlists_pkey">
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>17367</ObjectId>
+      <ObjectId>17390</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>1319</StateNumber>
-      <UnderlyingIndexId>17366</UnderlyingIndexId>
+      <StateNumber>1353</StateNumber>
+      <UnderlyingIndexId>17389</UnderlyingIndexId>
     </key>
   </database-model>
 </dataSource>

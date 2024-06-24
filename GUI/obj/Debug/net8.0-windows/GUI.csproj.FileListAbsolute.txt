@@ -134,3 +134,5 @@ P:\KostPostMusic\GUI\bin\Debug\net8.0-windows\Npgsql.NodaTime.dll
 P:\KostPostMusic\GUI\bin\Debug\net8.0-windows\Newtonsoft.Json.dll
 P:\KostPostMusic\GUI\bin\Debug\net8.0-windows\Newtonsoft.Json.Bson.dll
 P:\KostPostMusic\GUI\bin\Debug\net8.0-windows\Newtonsoft.Json.Schema.dll
+P:\KostPostMusic\GUI\obj\Debug\net8.0-windows\AddToPlaylistDialog.baml
+P:\KostPostMusic\GUI\obj\Debug\net8.0-windows\AddToPlaylistDialog.g.cs
