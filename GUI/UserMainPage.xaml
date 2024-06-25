@@ -17,13 +17,13 @@
             <Setter Property="HorizontalAlignment" Value="Right" />
             <Setter Property="VerticalAlignment" Value="Top" />
             <Setter Property="Margin" Value="0,10,20,10" />
-            <Setter Property="Width" Value="200"/>
-            <Setter Property="Height" Value="50"/>
+            <Setter Property="Width" Value="200" />
+            <Setter Property="Height" Value="50" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border BorderThickness="1" BorderBrush="Transparent" Background="White">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
@@ -32,52 +32,59 @@
 
         <!-- Style for the buttons -->
         <Style TargetType="Button" x:Key="ButtonStyle">
-            <Setter Property="Foreground" Value="Black"/>
-            <Setter Property="Background" Value="White"/>
-            <Setter Property="Padding" Value="10"/>
-            <Setter Property="Margin" Value="5"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="Background" Value="White" />
+            <Setter Property="Padding" Value="10" />
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Cursor" Value="Hand" />
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#EEEEEE"/>
+                    <Setter Property="Background" Value="#EEEEEE" />
                 </Trigger>
             </Style.Triggers>
         </Style>
 
         <!-- Style for the search input -->
         <Style x:Key="SearchInputStyle" TargetType="TextBox">
-            <Setter Property="Background" Value="White"/>
-            <Setter Property="Foreground" Value="Black"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Padding" Value="5"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="BorderBrush" Value="Gray"/>
+            <Setter Property="Background" Value="White" />
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Padding" Value="5" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="Gray" />
         </Style>
 
         <!-- Style for the search results -->
         <Style x:Key="SearchResultsStyle" TargetType="ListBox">
-            <Setter Property="Background" Value="White"/>
-            <Setter Property="Foreground" Value="Black"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="BorderBrush" Value="Gray"/>
+            <Setter Property="Background" Value="White" />
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="Gray" />
         </Style>
     </Window.Resources>
     <Grid>
         <!-- Main content area -->
         <Grid Background="Black">
             <!-- Home button -->
-            <Button Style="{StaticResource ButtonStyle}" Content="Home" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10"/>
+            <Button Style="{StaticResource ButtonStyle}" Content="Home" HorizontalAlignment="Left"
+                    VerticalAlignment="Top" Margin="10" />
             <!-- Search button -->
-            <Button Style="{StaticResource ButtonStyle}" Content="Search" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,70,0,0"/>
-            <Button x:Name="AddMusicButton" Style="{StaticResource ButtonStyle}" Content="Add Music" Click="AddMusicButton_Click" Margin="10,130,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
-            <Button x:Name="DeleteMusicButton" Style="{StaticResource ButtonStyle}" Content="Delete Music" Click="DeleteMusicButton_Click" Margin="10,190,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+            <Button Style="{StaticResource ButtonStyle}" Content="Search" HorizontalAlignment="Left"
+                    VerticalAlignment="Top" Margin="10,70,0,0" />
+            <Button x:Name="AddMusicButton" Style="{StaticResource ButtonStyle}" Content="Add Music"
+                    Click="AddMusicButton_Click" Margin="10,130,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+            <Button x:Name="DeleteMusicButton" Style="{StaticResource ButtonStyle}" Content="Delete Music"
+                    Click="DeleteMusicButton_Click" Margin="10,190,0,0" HorizontalAlignment="Left"
+                    VerticalAlignment="Top" />
+
 
             <!-- Username button -->
             <Button x:Name="UsernameButton" Style="{StaticResource UsernameButtonStyle}" Click="UsernameButton_Click" />
 
             <!-- Search input and results -->
-            <Grid x:Name="ForegroundContent" Panel.ZIndex="1000" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,70,20,0" Width="200">
+            <Grid x:Name="ForegroundContent" Panel.ZIndex="1000" HorizontalAlignment="Right" VerticalAlignment="Top"
+                  Margin="0,70,20,0" Width="200">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -108,73 +115,141 @@
                             <DataTemplate>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Text="{Binding DisplayName}" VerticalAlignment="Center"/>
-                                    <Button Grid.Column="1" Content="⋮" Width="30" Height="30" Click="TrackOptionsButton_Click"/>
+                                    <TextBlock Text="{Binding DisplayName}" VerticalAlignment="Center" />
+                                    <Button Grid.Column="1" Content="⋮" Width="30" Height="30"
+                                            Click="TrackOptionsButton_Click" />
                                 </Grid>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
                 </Border>
             </Grid>
-            
-            
+
 
             <!-- Music player controls -->
-            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,20">
-                <Button x:Name="PlayPauseButton" Content="Play" Click="PlayPauseButton_Click" Margin="10" Padding="10,5" Width="100" />
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,20">
-                    <TextBlock x:Name="CurrentTimeTextBlock" Foreground="White" VerticalAlignment="Center" Margin="10,0" Width="50" TextAlignment="Right"/>
-                    <Slider x:Name="MusicSlider" Width="300" ValueChanged="MusicSlider_ValueChanged" PreviewMouseDown="MusicSlider_PreviewMouseDown" PreviewMouseUp="MusicSlider_PreviewMouseUp" />
-                    <TextBlock x:Name="TotalTimeTextBlock" Foreground="White" VerticalAlignment="Center" Margin="10,0" Width="50"/>
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                        Margin="0,0,0,20">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,10">
+                    <Button x:Name="PreviousButton" Content="Previous" Click="PreviousButton_Click" Margin="5"
+                            Padding="10,5" Width="100" />
+                    <Button x:Name="PlayPauseButton" Content="Play" Click="PlayPauseButton_Click" Margin="5"
+                            Padding="10,5" Width="100" />
+                    <Button x:Name="NextButton" Content="Next" Click="NextButton_Click" Margin="5" Padding="10,5"
+                            Width="100" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                            Margin="0,0,0,10">
+                    <TextBlock x:Name="CurrentTimeTextBlock" Foreground="White" VerticalAlignment="Center"
+                               Margin="10,0" Width="50" TextAlignment="Right" />
+                    <Slider x:Name="MusicSlider" Width="300" ValueChanged="MusicSlider_ValueChanged"
+                            PreviewMouseDown="MusicSlider_PreviewMouseDown" PreviewMouseUp="MusicSlider_PreviewMouseUp" />
+                    <TextBlock x:Name="TotalTimeTextBlock" Foreground="White" VerticalAlignment="Center" Margin="10,0"
+                               Width="50" />
                 </StackPanel>
             </StackPanel>
 
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                        Margin="0,0,0,20">
+                <!-- <Button x:Name="PreviousButton" Content="Previous" Click="PreviousButton_Click" Margin="10" Padding="10,5" Width="100" /> -->
+                <!-- <Button x:Name="NextButton" Content="Next" Click="NextButton_Click" Margin="10" Padding="10,5" Width="100" /> -->
+            </StackPanel>
+
+
             <!-- Volume control slider in bottom-right corner -->
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10,0,10,20">
-                <TextBlock Text="Volume" Foreground="White" VerticalAlignment="Center" Margin="10,0"/>
-                <Slider x:Name="VolumeSlider" Width="150" Minimum="0" Maximum="1" Value="0.5" ValueChanged="VolumeSlider_ValueChanged"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                        Margin="10,0,10,20">
+                <TextBlock Text="Volume" Foreground="White" VerticalAlignment="Center" Margin="10,0" />
+                <Slider x:Name="VolumeSlider" Width="150" Minimum="0" Maximum="1" Value="0.5"
+                        ValueChanged="VolumeSlider_ValueChanged" />
             </StackPanel>
 
             <!-- Current music display -->
-            <TextBlock x:Name="CurrentMusicTextBlock" 
-                       HorizontalAlignment="Left" 
-                       VerticalAlignment="Bottom" 
-                       Margin="20,0,0,20" 
-                       Foreground="White" 
-                       FontSize="14"/>
+            <TextBlock x:Name="CurrentMusicTextBlock"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Bottom"
+                       Margin="20,0,0,20"
+                       Foreground="White"
+                       FontSize="14" />
         </Grid>
-        
-        <Button x:Name="CreatePlaylistButton" Style="{StaticResource ButtonStyle}" Content="Create Playlist" Click="CreatePlaylistButton_Click" Margin="10,250,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+
+        <Button x:Name="CreatePlaylistButton" Style="{StaticResource ButtonStyle}" Content="Create Playlist"
+                Click="CreatePlaylistButton_Click" Margin="10,250,0,0" HorizontalAlignment="Left"
+                VerticalAlignment="Top" />
 
         <!-- Add this after the CreatePlaylistButton -->
-        <ListBox x:Name="PlaylistsListBox" Margin="10,310,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Height="200" Background="White" Foreground="Black" SelectionChanged="PlaylistsListBox_SelectionChanged">
+        <ListBox x:Name="PlaylistsListBox" Margin="10,310,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                 Width="200" Height="200" Background="White" Foreground="Black"
+                 SelectionChanged="PlaylistsListBox_SelectionChanged">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Name}"/>
+                    <TextBlock Text="{Binding Name}" />
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <!-- Add this in the center of the app, initially hidden -->
-        <ListBox x:Name="PlaylistSongsListBox" 
-                 HorizontalAlignment="Center" 
-                 VerticalAlignment="Top" 
-                 Margin="0,10,0,110" 
-                 Width="400" 
-                 Height="800" 
-                 Background="White" 
-                 Foreground="Black" 
-                 Visibility="Collapsed">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding DisplayName}"/>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
 
-        
+        <!-- Add this Grid in the center of your main Grid, adjusting the position as needed -->
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,110">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <!-- PlaylistSongsListBox in the first column -->
+            <ListBox x:Name="PlaylistSongsListBox"
+                     Grid.Column="0"
+                     Width="400"
+                     Height="400"
+                     Background="White"
+                     Foreground="Black"
+                     SelectionChanged="PlaylistSongsListBox_SelectionChanged">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Orientation="Horizontal" Grid.Column="0">
+                                <TextBlock Text="{Binding DisplayName}" Margin="0,0,10,0">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsCurrentlyPlaying}" Value="True">
+                                                    <Setter Property="Foreground" Value="Green" />
+                                                    <Setter Property="FontWeight" Value="Bold" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                                <TextBlock Text="{Binding FormattedDuration}" />
+                            </StackPanel>
+                            <Button Grid.Column="1" Content="⋮" Width="30" Height="30" Click="PlaylistSongOptionsButton_Click" />
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+
+
+            <!-- SortOptionsComboBox in the second column, to the right of the ListBox -->
+            <ComboBox x:Name="SortOptionsComboBox"
+                      Grid.Column="1"
+                      Width="130"
+                      Height="30"
+                      VerticalAlignment="Top"
+                      Margin="10,0,0,0"
+                      SelectionChanged="SortOptionsComboBox_SelectionChanged">
+                <ComboBoxItem Content="Sort by Date Added" />
+                <ComboBoxItem Content="Sort by Author Name" />
+                <ComboBoxItem Content="Sort by Duration" />
+                <ComboBoxItem Content="Sort by ID" />
+            </ComboBox>
+
+        </Grid>
     </Grid>
 </Window>

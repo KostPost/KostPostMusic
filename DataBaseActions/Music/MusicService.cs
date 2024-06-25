@@ -1,4 +1,7 @@
-﻿using ClassesData;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using ClassesData;
 using ClassesData.Music;
 using Microsoft.EntityFrameworkCore;
 using MusicAPI;
@@ -16,14 +19,12 @@ public class MusicService
         _azureBlobs = azureBlobs;
     }
 
-
     public async Task<(bool Success, string Message)> AddMusicFileAsync(string musicName, string filePath,
-        Account account)
+        Account account, TimeSpan duration)
     {
         bool azureSuccess = false;
         bool sqlSuccess = false;
 
-        
         if (_dbContext.MusicFiles.Any(m => m.FileName == musicName))
         {
             return (false, $"A music file with the name '{musicName}' already exists.");
@@ -50,7 +51,8 @@ public class MusicService
                 {
                     FileName = musicName,
                     AuthorName = account.Username,
-                    AuthorID = account.Id
+                    AuthorID = account.Id,
+                    Duration = duration  // Add the duration here
                 };
 
                 _dbContext.MusicFiles.Add(music);
@@ -88,6 +90,5 @@ public class MusicService
         {
             return (false, "An unexpected error occurred.");
         }
-        
     }
 }

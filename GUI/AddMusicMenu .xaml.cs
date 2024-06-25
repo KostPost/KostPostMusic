@@ -1,9 +1,11 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using ClassesData;
 using DataBaseActions;
 using DataBaseActions.Music;
 using Microsoft.Win32;
 using MusicAPI;
+using NAudio.Wave;
 
 namespace KostPostMusic
 {
@@ -11,6 +13,7 @@ namespace KostPostMusic
     {
         private Account currentUser;
         private string selectedFilePath;
+        private TimeSpan selectedFileDuration;
 
         public AddMusicMenu(Account account)
         {
@@ -30,6 +33,18 @@ namespace KostPostMusic
             {
                 selectedFilePath = openFileDialog.FileName;
                 SelectedFileTextBlock.Text = selectedFilePath;
+
+                // Get and display the duration of the selected file
+                selectedFileDuration = GetMp3Duration(selectedFilePath);
+                DurationTextBlock.Text = $"Duration: {selectedFileDuration.ToString(@"hh\:mm\:ss")}";
+            }
+        }
+
+        private TimeSpan GetMp3Duration(string filePath)
+        {
+            using (var reader = new Mp3FileReader(filePath))
+            {
+                return reader.TotalTime;
             }
         }
 
@@ -56,7 +71,7 @@ namespace KostPostMusic
                     var azureBlobs = new AzureBlobs();
                     var musicService = new MusicService(dbContext, azureBlobs);
 
-                    var result = await musicService.AddMusicFileAsync(musicName, selectedFilePath, currentUser);
+                    var result = await musicService.AddMusicFileAsync(musicName, selectedFilePath, currentUser, selectedFileDuration);
 
                     if (result.Success)
                     {
@@ -68,8 +83,6 @@ namespace KostPostMusic
                         MessageBox.Show($"An error occurred: {result.Message}");
                     }
                 }
-
-                Close();
             }
             catch (Exception ex)
             {

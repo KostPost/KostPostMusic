@@ -102,26 +102,20 @@ public class KostPostMusicContext : DbContext
  
         modelBuilder.Entity<Playlist>(entity =>
         {
-            
             entity.ToTable("playlists");
-        
+
             entity.HasKey(e => e.Id);
-        
+
             entity.Property(e => e.Id)
                 .HasColumnName("id")
                 .IsRequired()
                 .ValueGeneratedOnAdd();
-        
+
             entity.Property(e => e.Name)
                 .HasColumnName("name")
                 .HasColumnType("text")
                 .IsRequired();
-        
-            // entity.Property(e => e.Description)
-            //     .HasColumnName("description")
-            //     .HasColumnType("text");
-        
-        
+
             entity.Property(e => e.SongIds)
                 .HasColumnName("song_ids")
                 .HasColumnType("jsonb")
@@ -130,31 +124,18 @@ public class KostPostMusicContext : DbContext
                     v => JsonConvert.DeserializeObject<List<int>>(v))
                 .IsRequired();
 
-        
-            // entity.Property(e => e.CreatedAt)
-            //     .HasColumnName("created_at")
-            //     .HasColumnType("timestamp with time zone")
-            //     .IsRequired()
-            //     .HasDefaultValueSql("CURRENT_TIMESTAMP");
-            //
-            // entity.Property(e => e.UpdatedAt)
-            //     .HasColumnName("updated_at")
-            //     .HasColumnType("timestamp with time zone")
-            //     .IsRequired()
-            //     .HasDefaultValueSql("CURRENT_TIMESTAMP");
-            
-            // entity.Property(e => e.CreatedAt)
-            //     .HasColumnName("created_at")
-            //     .HasColumnType("timestamp with time zone");
-            //
-            // entity.Property(e => e.UpdatedAt)
-            //     .HasColumnName("updated_at")
-            //     .HasColumnType("timestamp with time zone");
-        
             entity.Property(e => e.CreatedBy)
                 .HasColumnName("created_by")
                 .HasColumnType("integer")
                 .IsRequired();
+
+            entity.Property(e => e.SongAddedTimes)
+                .HasColumnName("song_added_times")
+                .HasColumnType("jsonb")
+                .HasConversion(
+                    v => JsonConvert.SerializeObject(v),
+                    v => JsonConvert.DeserializeObject<Dictionary<int, DateTime>>(v))
+                .IsRequired(false);
         });
     }
 }

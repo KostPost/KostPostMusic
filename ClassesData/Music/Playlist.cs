@@ -5,8 +5,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using System.Text.Json.Serialization;
-
 
 namespace ClassesData.Music
 {
@@ -17,14 +15,11 @@ namespace ClassesData.Music
 
         [JsonPropertyName("name")] public string Name { get; set; }
 
-      //   [JsonPropertyName("description")] public string Description { get; set; }
-
         [JsonPropertyName("songIds")] public List<int> SongIds { get; set; } = new List<int>();
 
-        // [JsonPropertyName("createdAt")] public DateTime CreatedAt { get; set; } = DateTime.Now;
-        //
-        // [JsonPropertyName("updatedAt")] public DateTime UpdatedAt { get; set; } = DateTime.Now;
-
         [JsonPropertyName("createdBy")] public int CreatedBy { get; set; }
+
+        [JsonPropertyName("songAddedTimes")]
+        public Dictionary<int, DateTime> SongAddedTimes { get; set; } = new Dictionary<int, DateTime>();
     }
 }

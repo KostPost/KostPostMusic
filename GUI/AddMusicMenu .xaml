@@ -18,6 +18,8 @@
             <TextBlock Text="Music Name:" Margin="0,0,0,5" />
             <TextBox x:Name="MusicNameTextBox" Margin="0,0,0,10" />
 
+            <TextBlock x:Name="DurationTextBlock" Text="Duration: " />
+            
             <Button x:Name="AddMusicButton" Content="Add Music" Click="AddMusicButton_Click" Margin="0,10" HorizontalAlignment="Right" />
         </StackPanel>
     </Grid>

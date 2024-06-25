@@ -136,3 +136,10 @@ P:\KostPostMusic\GUI\bin\Debug\net8.0-windows\Newtonsoft.Json.Bson.dll
 P:\KostPostMusic\GUI\bin\Debug\net8.0-windows\Newtonsoft.Json.Schema.dll
 P:\KostPostMusic\GUI\obj\Debug\net8.0-windows\AddToPlaylistDialog.baml
 P:\KostPostMusic\GUI\obj\Debug\net8.0-windows\AddToPlaylistDialog.g.cs
+P:\KostPostMusic\GUI\bin\Debug\net8.0-windows\NAudio.dll
+P:\KostPostMusic\GUI\bin\Debug\net8.0-windows\NAudio.Asio.dll
+P:\KostPostMusic\GUI\bin\Debug\net8.0-windows\NAudio.Core.dll
+P:\KostPostMusic\GUI\bin\Debug\net8.0-windows\NAudio.Midi.dll
+P:\KostPostMusic\GUI\bin\Debug\net8.0-windows\NAudio.Wasapi.dll
+P:\KostPostMusic\GUI\bin\Debug\net8.0-windows\NAudio.WinForms.dll
+P:\KostPostMusic\GUI\bin\Debug\net8.0-windows\NAudio.WinMM.dll
