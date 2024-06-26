@@ -99,7 +99,21 @@ public class KostPostMusicContext : DbContext
                 .HasForeignKey(m => m.AuthorID);
         });
         
- 
+        modelBuilder.Entity<Playlist>()
+            .Property(e => e.SongIds)
+            .HasConversion(
+                v => JsonConvert.SerializeObject(v),
+                v => JsonConvert.DeserializeObject<List<int>>(v)
+            );
+
+        modelBuilder.Entity<Playlist>()
+            .Property(e => e.SongAddedTimes)
+            .HasConversion(
+                v => JsonConvert.SerializeObject(v),
+                v => JsonConvert.DeserializeObject<Dictionary<int, DateTime>>(v)
+            );
+        
+                    
         modelBuilder.Entity<Playlist>(entity =>
         {
             entity.ToTable("playlists");

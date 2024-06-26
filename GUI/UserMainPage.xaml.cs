@@ -1,7 +1,6 @@
 ﻿    using System.IO;
     using System.Windows;
     using System.Windows.Controls;
-    using System.Windows.Controls.Primitives;
     using System.Windows.Input;
     using System.Windows.Media;
     using System.Windows.Threading;
@@ -10,7 +9,6 @@
     using DataBaseActions;
     using Microsoft.EntityFrameworkCore;
     using MusicAPI;
-    using Track = System.Windows.Controls.Primitives.Track;
 
     namespace KostPostMusic;
 
@@ -29,7 +27,7 @@
         
         private LinkedList<SearchResult> playListSongs = new LinkedList<SearchResult>();
         
-        
+        private LinkedList<SearchResult> originalPlaylist = new LinkedList<SearchResult>();
 
 
         public UserMainPage(Account account)
@@ -64,12 +62,10 @@
                 {
                     if (currentSong.Next != null)
                     {
-                        // Move to the next song
                         currentSong = currentSong.Next;
                     }
                     else
                     {
-                        // If it's the last song, go back to the start of the playlist
                         currentSong = musicQueue.First;
                     }
                     await PlayCurrentSong();
@@ -112,20 +108,8 @@
                     .ToListAsync();
             }
 
-            PlaylistsListBox.ItemsSource = null; // Clear the current items
+            PlaylistsListBox.ItemsSource = null; 
             PlaylistsListBox.ItemsSource = userPlaylists;
-        }
-        private void AddToPlaylist_Click(object sender, RoutedEventArgs e)
-        {
-            var menuItem = sender as MenuItem;
-            var contextMenu = menuItem.Parent as ContextMenu;
-            var textBlock = contextMenu.PlacementTarget as TextBlock;
-            var selectedTrack = textBlock.DataContext as SearchResult;
-
-            if (selectedTrack != null)
-            {
-                ShowAddToPlaylistDialog(selectedTrack);
-            }
         }
         private void TrackOptionsButton_Click(object sender, RoutedEventArgs e)
         {
@@ -136,8 +120,6 @@
             MenuItem addToPlaylistItem = new MenuItem { Header = "Add to Playlist" };
             addToPlaylistItem.Click += (s, args) => ShowAddToPlaylistDialog(track);
             contextMenu.Items.Add(addToPlaylistItem);
-
-            // You can add more menu items here for other actions
 
             contextMenu.PlacementTarget = button;
             contextMenu.IsOpen = true;
@@ -165,7 +147,6 @@
                     {
                         dbPlaylist.SongIds.Add(track.Id);
                     
-                        // Add the current time for when the song was added
                         if (dbPlaylist.SongAddedTimes == null)
                         {
                             dbPlaylist.SongAddedTimes = new Dictionary<int, DateTime>();
@@ -236,9 +217,9 @@
                         });
                     }
                 }
-                playListSongs = new LinkedList<SearchResult>(playlistSongs);
-
                 musicQueue = new LinkedList<SearchResult>(playlistSongs);
+                originalPlaylist = new LinkedList<SearchResult>(playlistSongs);
+                
                 UpdatePlaylistView();
                 PlaylistSongsListBox.Visibility = Visibility.Visible;
             }
@@ -246,7 +227,7 @@
         private void UpdatePlaylistView()
         {
             PlaylistSongsListBox.ItemsSource = null;
-            PlaylistSongsListBox.ItemsSource = playListSongs;
+            PlaylistSongsListBox.ItemsSource = originalPlaylist;
         }
 
         private async Task SortPlaylistSongs(Playlist playlist)
@@ -304,11 +285,7 @@
             deleteMusicWindow.Owner = this;
             deleteMusicWindow.ShowDialog();
         }
-
-        private ListBox GetSearchResultsListBox()
-        {
-            return this.FindName("SearchResults") as ListBox;
-        }
+        
 
         private async void SearchInput_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -380,35 +357,61 @@
             {
                 using (var context = new KostPostMusicContext())
                 {
-                    var playlist = await context.Playlists.FindAsync(selectedPlaylist.Id);
+                    var playlist = await context.Playlists
+                        .FirstOrDefaultAsync(p => p.Id == selectedPlaylist.Id);
+
                     if (playlist != null)
                     {
-                        playlist.SongIds.Remove(track.Id);
-                        playlist.SongAddedTimes.Remove(track.Id);
+                        if (playlist.SongIds.Contains(track.Id))
+                        {
+                            playlist.SongIds.Remove(track.Id);
+                        }
+
+                        if (playlist.SongAddedTimes != null && playlist.SongAddedTimes.ContainsKey(track.Id))
+                        {
+                            playlist.SongAddedTimes.Remove(track.Id);
+                        }
+
+                        context.Entry(playlist).State = EntityState.Modified;
+
                         await context.SaveChangesAsync();
                     }
                 }
-
                 musicQueue.Remove(track);
+
+                playListSongs.Remove(track);
+
+                if (originalPlaylist != null)
+                {
+                    originalPlaylist.Remove(track);
+                }
+
                 UpdatePlaylistView();
+
+                if (currentSong != null && currentSong.Value.Id == track.Id)
+                {
+                    await PlayNextSong();
+                }
+
                 MessageBox.Show($"Removed '{track.DisplayName}' from playlist '{selectedPlaylist.Name}'", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                await LoadUserPlaylists();
             }
         }
+
+
 
         private void AddToQueue(SearchResult track)
         {
             if (currentSong != null)
             {
-                // Insert the new track after the current song
-                musicQueue.AddAfter(currentSong, track);
+                musicQueue.AddAfter(musicQueue.Find(currentSong.Value), track);
             }
             else
             {
-                // If there's no current song, add to the beginning of the queue
                 musicQueue.AddFirst(track);
             }
 
-            // Update the PlaylistSongsListBox
             UpdatePlaylistView();
         }
        
@@ -419,19 +422,29 @@
             {
                 await Application.Current.Dispatcher.InvokeAsync(async () =>
                 {
-                    // Reset highlighting for all songs
                     foreach (var song in musicQueue)
                     {
                         song.IsCurrentlyPlaying = false;
                     }
 
-                    // Set highlighting for the current song
                     currentSong.Value.IsCurrentlyPlaying = true;
 
-                    // Refresh the ListBox to reflect the changes
                     PlaylistSongsListBox.Items.Refresh();
 
                     await PlayMusicAsync(currentSong.Value.FileName);
+                    
+                    while (musicQueue.First != currentSong)
+                    {
+                        var songToRemove = musicQueue.First.Value;
+                        if (!originalPlaylist.Contains(songToRemove))
+                        {
+                            musicQueue.RemoveFirst();
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
                 });
             }
         }
@@ -457,9 +470,11 @@
             if (currentSong != null)
             {
                 currentSong.Value.IsCurrentlyPlaying = false;
-                if (currentSong.Previous != null)
+                var currentInOriginal = originalPlaylist.Find(currentSong.Value);
+                if (currentInOriginal != null && currentInOriginal.Previous != null)
                 {
-                    currentSong = currentSong.Previous;
+                    var prevSong = currentInOriginal.Previous.Value;
+                    currentSong = musicQueue.Find(prevSong);
                 }
                 else
                 {
@@ -479,12 +494,10 @@
                     AzureBlobs azureBlobs = new AzureBlobs();
                     string sasUrl = azureBlobs.GetBlobSasUri(trackName);
 
-                    // Stop the current playback if any
                     mediaPlayer.Stop();
 
                     mediaPlayer.Open(new Uri(sasUrl, UriKind.Absolute));
                     
-                    // Wait for the media to be ready
                     var openMediaTaskCompletionSource = new TaskCompletionSource<bool>();
                     mediaPlayer.MediaOpened += (s, e) => openMediaTaskCompletionSource.TrySetResult(true);
                     mediaPlayer.MediaFailed += (s, e) => openMediaTaskCompletionSource.TrySetException(new Exception("Media failed to open"));
@@ -499,10 +512,8 @@
                     MusicSlider.Value = 0;
                     UpdateTimeDisplay();
 
-                    // Start the timer
                     timer.Start();
 
-                    // Update current music
                     using (var context = new KostPostMusicContext())
                     {
                         currentMusic = await context.MusicFiles.FirstOrDefaultAsync(m => m.FileName == trackName);
@@ -590,38 +601,7 @@
                 });
             }
         }
-
-        private void MediaPlayer_MediaOpened(object sender, EventArgs e)
-        {
-            if (mediaPlayer.NaturalDuration.HasTimeSpan)
-            {
-                Application.Current.Dispatcher.Invoke(() =>
-                {
-                    MusicSlider.Minimum = 0;
-                    MusicSlider.Maximum = mediaPlayer.NaturalDuration.TimeSpan.TotalSeconds;
-                    MusicSlider.SmallChange = 1;
-                    MusicSlider.LargeChange = Math.Min(10, mediaPlayer.NaturalDuration.TimeSpan.TotalSeconds / 10);
-                });
-            }
-        }
-
-        // private void AttachSliderThumbEvents()
-        // {
-        //     var track = MusicSlider.Template.FindName("PART_Track", MusicSlider) as Track;
-        //     if (track != null)
-        //     {
-        //         var thumb = track.Thumb;
-        //         if (thumb != null)
-        //         {
-        //             thumb.DragStarted += MusicSlider_DragStarted;
-        //             thumb.DragCompleted += MusicSlider_DragCompleted;
-        //         }
-        //     }
-        // }
-
-
         private bool isDraggingSlider = false;
-
         private void MusicSlider_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             isDraggingSlider = true;
